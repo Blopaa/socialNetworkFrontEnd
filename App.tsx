@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import InputAtom from './src/components/atoms/input'
-import SignUpFormMolecule from './src/components/molecules/SignUpForm'
-import SignUpPage from './src/pages/auth/SignUp'
+import Router from './src/router'
 
 const Container = styled.div`
     width: 100%;
@@ -15,7 +13,7 @@ const Container = styled.div`
 const App = () => {
     return (
         <Container>
-            <SignUpPage/>
+            <Router/>
         </Container>
     )
 }

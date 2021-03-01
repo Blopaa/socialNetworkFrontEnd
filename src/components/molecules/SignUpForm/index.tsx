@@ -12,7 +12,7 @@ const Form = styled.form`
 `;
 
 const Container = styled.div`
-    width: 31.25rem;
+  width: 31.25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,25 +34,25 @@ const SignUpFormMolecule = () => {
       <p>Sign Up</p>
       <Form>
         <InputAtom
-          name="nickname"
+          name="Nickname"
           sendValue={setSignUpForm}
           lastFormValue={signUpForm}
           formType="text"
         />
         <InputAtom
-          name="email"
+          name="Email"
           sendValue={setSignUpForm}
           lastFormValue={signUpForm}
           formType="text"
         />
         <InputAtom
-          name="password"
+          name="Password"
           sendValue={setSignUpForm}
           lastFormValue={signUpForm}
           formType="password"
         />
         <InputAtom
-          name="repeat Password"
+          name="Repeat Password"
           sendValue={setPasswordRep}
           lastFormValue={passwordRep}
           formType="password"
