@@ -2,8 +2,9 @@ import React from 'react';
 import styled from "@emotion/styled";
 import {fadeIn} from "../../../styles/animations";
 
-const FormError = styled.div`
+const FormError = styled.div<{ bottom?: boolean}>`
   position: relative;
+  bottom: ${({bottom}) => bottom ? "5rem" : "none"};
   div{
     width: 15rem;
     height: 15rem;
@@ -30,11 +31,12 @@ const FormError = styled.div`
 
 interface FormErrorProps {
     message: string
+    bottom?: boolean;
 }
 
-const FormErrorAtom: React.FC<FormErrorProps> = ({message}) => {
+const FormErrorAtom: React.FC<FormErrorProps> = ({message, bottom}) => {
     return (
-        <FormError>
+        <FormError bottom={bottom}>
             <div><p>{message}</p></div>
         </FormError>
     );

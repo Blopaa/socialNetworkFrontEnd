@@ -11,15 +11,17 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 31.25rem;
   width: 100%;
 `;
 
 const Container = styled.div`
-  width: 31.25rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   p {
     width: 100%;
     font-size: 2rem;
@@ -29,30 +31,26 @@ const Container = styled.div`
 `;
 
 const SignInFormMolecule = () => {
-    const [signInForm, setsignInForm] = useState<{Password?: string, Email?: string}>({});
+    const [signInForm, setsignInForm] = useState<{ Password?: string, Email?: string }>({});
     const [error, setError] = useState({message: '', error: false});
     const {dispatch, state} = useContext(AuthContext);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!signInForm.Password || !signInForm.Email){
+        if (!signInForm.Password || !signInForm.Email) {
             setError({message: "email and password must be fullfilled", error: true})
             return;
         }
-        if(!dispatch) throw new Error("no dispatch")
+        if (!dispatch) throw new Error("no dispatch")
         dispatch({type: "LOG_IN", payload: "token"})
 
     }
 
-    useEffect(() => {
-        console.log(signInForm)
-    }, [signInForm]);
-
     return (
         <>
             <Container>
-                <p>Sign In</p>
                 <Form onSubmit={handleSubmit}>
+                    <p>Sign In</p>
                     <InputAtom
                         name="Email"
                         sendValue={setsignInForm}
@@ -71,6 +69,7 @@ const SignInFormMolecule = () => {
                         Submit
                     </ButtomAtom>
                 </Form>
+
             </Container>
             {error.error && <FormErrorAtom message={error.message}/>}
         </>

@@ -15,6 +15,12 @@ const Container = styled.div`
   width: calc(100% - 8rem);
   height: calc(100vh - 16.625rem);
   animation: ${fadeIn} .5s ease;
+
+  @media (max-width: 450px) {
+    margin: .5rem;
+    width: calc(100% - 1rem);
+    height: calc(100vh - 9.624rem);
+  }
 `;
 
 const SignInPage = () => {

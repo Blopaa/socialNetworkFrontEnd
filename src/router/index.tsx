@@ -9,13 +9,6 @@ import AuthRoutes from "./authRoutes";
 import OtherRoutes from "./otherRoutes";
 import {AuthContext} from "../contexts/authContext";
 
-  const Nav = styled.nav`
-    width: 100%;
-    height: 6.625rem;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
-    background-color: #FFFFFF;
-  `
-
 const Router = () => {
     let init = () => {
         let token = localStorage.getItem("token");
@@ -36,7 +29,6 @@ const Router = () => {
         <BrowserRouter>
         <div style={{minWidth: '100vw', minHeight: '100vh'}}>
           <AuthContext.Provider value={{state, dispatch}}>
-              <Nav/>
               <Switch>
                   {state.token ? <OtherRoutes/> : <AuthRoutes/>}
               </Switch>
