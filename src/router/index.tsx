@@ -1,14 +1,13 @@
 import styled from '@emotion/styled';
-import React, {createContext, useContext, useReducer} from 'react'
+import React, {useContext, useEffect, useReducer} from 'react'
 import {
     BrowserRouter,
     Switch,
-    Route,
-    Redirect,
   } from "react-router-dom";
 import authReducer from "../reducers/authReducer";
 import AuthRoutes from "./authRoutes";
 import OtherRoutes from "./otherRoutes";
+import {AuthContext} from "../contexts/authContext";
 
   const Nav = styled.nav`
     width: 100%;
@@ -18,9 +17,16 @@ import OtherRoutes from "./otherRoutes";
   `
 
 const Router = () => {
+    let init = () => {
+        return JSON.parse(localStorage.getItem("token") || "{token: undefined}")
+    };
 
-    const [state, dispatch] = useReducer(authReducer, {token: undefined});
-    const AuthContext = createContext({state, dispatch});
+    const [state, dispatch] = useReducer(authReducer, {}, init);
+
+    useEffect(() => {
+        localStorage.setItem("token", JSON.stringify(state))
+    }, [state]);
+
 
     return (
         <BrowserRouter>

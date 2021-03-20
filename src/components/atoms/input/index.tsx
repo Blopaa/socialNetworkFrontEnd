@@ -7,6 +7,7 @@ type InputProps = {
   sendValue: React.Dispatch<React.SetStateAction<{}>>;
   lastFormValue: {};
   formType: string;
+  pattern?: string;
 };
 
 const Input = styled.input`
@@ -39,6 +40,7 @@ const InputAtom: React.FC<InputProps> = ({
   sendValue,
   lastFormValue,
   formType,
+    pattern
 }) => {
   const { value, handleInputChange } = useForm({
     [name]: '',
@@ -60,6 +62,7 @@ const InputAtom: React.FC<InputProps> = ({
       name={name}
       value={inputValue}
       type={formType}
+      pattern={pattern}
     />
   );
 };

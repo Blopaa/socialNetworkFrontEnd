@@ -2,13 +2,12 @@ import React from 'react';
 import {authInitialState} from "../../types/generic";
 
 const AuthReducer = (state: authInitialState = {}, action: { type?: authReducerTypes, payload?: string }): authInitialState => {
+    console.log("here")
     switch (action.type) {
         case "LOG_IN":
-            state.token = action.payload;
-            return state;
+            return {token: action.payload}
         case "LOG_OUT":
-            state.token = undefined;
-            return state
+            return {token: undefined}
         default:
             throw new Error("unknown action type");
     }
