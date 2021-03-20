@@ -18,10 +18,14 @@ import {AuthContext} from "../contexts/authContext";
 
 const Router = () => {
     let init = () => {
-        return JSON.parse(localStorage.getItem("token") || "{token: undefined}")
+        let token = localStorage.getItem("token");
+        if(token){
+            return JSON.parse(token);
+        }
+        return {token: undefined};
     };
 
-    const [state, dispatch] = useReducer(authReducer, {}, init);
+    const [state, dispatch] = useReducer(authReducer, {token: undefined}, init);
 
     useEffect(() => {
         localStorage.setItem("token", JSON.stringify(state))
