@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import SignUpFormMolecule from '../../../components/molecules/signUpForm';
+import signInFormMolecule from '../../../components/molecules/signInForm';
+import SignInFormMolecule from "../../../components/molecules/signInForm";
 
 const Container = styled.div`
   margin: 4rem;
@@ -8,16 +9,16 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 16.625rem);
   width: calc(100% - 8rem);
+  height: calc(100vh - 16.625rem);
 `;
 
-const SignUpPage = () => {
+const SignInPage = () => {
     return (
         <Container>
-            <SignUpFormMolecule/>
+            <SignInFormMolecule />
         </Container>
     );
 };
 
-export default SignUpPage;
+export default SignInPage;
