@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "@emotion/styled";
 import MenuSidebarMolecule from "../molecules/menuSidebar";
 import {fadeIn} from "../../styles/animations";
+import PostCreatorMolecule from "../molecules/postCreator";
 
 const HomeGridOrganism = () => {
 
@@ -10,13 +11,12 @@ const HomeGridOrganism = () => {
       height: 100vh;
       display: grid;
       grid-template-columns: 23.375rem auto 23.375rem;
-      background-color: #E5E5E5;
-      animation: ${fadeIn} .5s ease;
+      background-color: #F6F6F6;
     `
 
     return (
         <HomeGrid>
-            <MenuSidebarMolecule/><p>blw</p><p>vlw</p>
+            <MenuSidebarMolecule/><PostCreatorMolecule/><p>vlw</p>
         </HomeGrid>
     );
 };

@@ -48,14 +48,14 @@ const MenuSideBar = styled.div`
 
 const MenuSidebarMolecule = () => {
 
-    const {state, dispatch} =  useContext(AuthContext)
+    const {authState, authDispatch} =  useContext(AuthContext)
 
     return (
         <MenuSideBar>
             <ul>
                 <li><Link to="/home"><AiOutlineHome/><p>Home</p></Link></li>
                 <li><Link to="/user"><CgProfile/><p>Profile</p></Link></li>
-                <li onClick={() => dispatch && dispatch({type: "LOG_OUT"})}><FiLogOut/><p>Log out</p></li>
+                <li onClick={() => authDispatch && authDispatch({type: "LOG_OUT"})}><FiLogOut/><p>Log out</p></li>
             </ul>
         </MenuSideBar>
     );

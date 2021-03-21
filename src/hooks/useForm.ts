@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {ChangeEvent, useState} from "react"
 
 export type useFormType = {
     handleInputChange: ({target}: React.ChangeEvent<HTMLInputElement>) => void;
@@ -8,11 +8,12 @@ export type useFormType = {
 const useForm = (initialState: {}) => {
     const [inputValue, setInputValue] = useState(initialState)
 
-    const handleInputChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = ({target}: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue({
             ...inputValue,
             [target.name]: target.value
         })
+        console.log(inputValue)
     }
 
     return {

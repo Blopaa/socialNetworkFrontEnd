@@ -1,8 +1,9 @@
 import React from 'react';
 import {authInitialState} from "../../types/generic";
+import {authReducerTypes} from "../../types/reducerTypes";
 
 const AuthReducer = (state: authInitialState = {}, action: { type?: authReducerTypes, payload?: string }): authInitialState => {
-    console.log("here")
+    console.log("pim pam pum")
     switch (action.type) {
         case "LOG_IN":
             return {token: action.payload}

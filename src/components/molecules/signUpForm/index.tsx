@@ -33,7 +33,7 @@ const SignUpFormMolecule = () => {
     const [signUpForm, setSignUpForm] = useState<{ Password?: string, Email?: string, Nickname?: string }>({});
     const [passwordRep, setPasswordRep] = useState<{ "Repeat Password"?: string }>({});
     const [error, setError] = useState({message: '', error: false});
-    const {dispatch, state} = useContext(AuthContext);
+    const {authDispatch, authState} = useContext(AuthContext);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,8 +45,8 @@ const SignUpFormMolecule = () => {
             setError({message: "both passwords must be the same", error: true})
             return;
         }
-        if (!dispatch) throw new Error("no dispatch")
-        dispatch({type: "LOG_IN", payload: "token"})
+        if (!authDispatch) throw new Error("no dispatch")
+        authDispatch({type: "LOG_IN", payload: "token"})
     }
 
     return (

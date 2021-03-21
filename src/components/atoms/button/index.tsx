@@ -8,6 +8,7 @@ type ButtomStyleProps = {
 interface ButtomProps extends ButtomStyleProps {
   children: string;
   type: 'button' | 'submit' | 'reset';
+  onSubmit?: any
 }
 
 const Button = styled.button<ButtomStyleProps>`
@@ -29,8 +30,8 @@ const Button = styled.button<ButtomStyleProps>`
     }
 `;
 
-const ButtomAtom: React.FC<ButtomProps> = ({ children, type, size, stetic }) => {
-  return <Button type={type} size={size} stetic={stetic}>{children}</Button>;
+const ButtomAtom: React.FC<ButtomProps> = ({ children, type, size, stetic, onSubmit }) => {
+  return <Button onSubmit={onSubmit} type={type} size={size} stetic={stetic}>{children}</Button>;
 };
 
 export default ButtomAtom;

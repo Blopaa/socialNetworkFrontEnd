@@ -33,7 +33,7 @@ const Container = styled.div`
 const SignInFormMolecule = () => {
     const [signInForm, setsignInForm] = useState<{ Password?: string, Email?: string }>({});
     const [error, setError] = useState({message: '', error: false});
-    const {dispatch, state} = useContext(AuthContext);
+    const {authDispatch, authState} = useContext(AuthContext);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -41,8 +41,8 @@ const SignInFormMolecule = () => {
             setError({message: "email and password must be fullfilled", error: true})
             return;
         }
-        if (!dispatch) throw new Error("no dispatch")
-        dispatch({type: "LOG_IN", payload: "token"})
+        if (!authDispatch) throw new Error("no dispatch")
+        authDispatch({type: "LOG_IN", payload: "token"})
 
     }
 
