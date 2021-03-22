@@ -13,7 +13,6 @@ const useForm = (initialState: {}) => {
             ...inputValue,
             [target.name]: target.value
         })
-        console.log(inputValue)
     }
 
     return {

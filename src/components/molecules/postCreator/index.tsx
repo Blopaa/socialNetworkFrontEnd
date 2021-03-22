@@ -17,7 +17,7 @@ const PostCreator = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-top: 1rem;
-  
+
   h3 {
     font-size: 2.225rem;
     margin: 0;
@@ -60,9 +60,20 @@ const PostCreator = styled.div`
     box-sizing: border-box;
     min-height: 2.375rem;
   }
-
-  p {
-    white-space: pre-wrap;
+  form div {
+    display: flex;
+    align-items: center;
+    p{
+      margin-left: 3rem;
+      color: #333333;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+  }
+  
+  span{
+    color: #f6f6f6;
+    background-color: crimson;
   }
 `
 
@@ -79,7 +90,7 @@ const PostCreatorMolecule = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if(textarea && postDispatch){
+        if (textarea && postDispatch && textarea.length <= 216) {
             let date = new Date();
             postDispatch({type: "ADD", payload: {id: 1, message: (value as { textarea: string }).textarea, date}});
             (value as { textarea: string }).textarea = '';
@@ -91,10 +102,10 @@ const PostCreatorMolecule = () => {
         <PostCreator>
             <h3>Post something</h3>
             <form onSubmit={handleSubmit}>
-                <textarea placeholder="write here" value={textarea} onChange={handleInputChange} name="textarea"/>
-                <ButtomAtom type={"submit"}
-                            size={"l"}
-                            stetic={"auth"}>Post</ButtomAtom>
+                <textarea placeholder="write here" value={textarea} onChange={handleInputChange} name="textarea"><span>hi</span></textarea>
+                <div><ButtomAtom type={"submit"}
+                                 size={"l"}
+                                 stetic={"auth"}>Post</ButtomAtom><p>{textarea.length}/216</p></div>
             </form>
         </PostCreator>
     );
