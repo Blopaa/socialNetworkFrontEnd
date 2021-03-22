@@ -3,10 +3,12 @@ import styled from "@emotion/styled";
 import {CgProfile} from 'react-icons/cg'
 import {AiOutlineHeart} from 'react-icons/ai'
 import {FaRegCommentAlt} from "react-icons/all";
+import {profile} from "../../../types/generic";
 
 interface PostCardProps {
     message: string;
     id: number;
+    profile: profile;
 }
 
 const PostCard = styled.div`
@@ -60,12 +62,12 @@ const CardTools = styled.div`
   }
 `
 
-const PostCardMolecule: React.FC<PostCardProps> = ({message, id}) => {
+const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile}) => {
     return (
         <Container>
             <PostCard>
                 <span><CgProfile/></span>
-                <div><h5>juan</h5><p>{message}</p></div>
+                <div><h5>{profile.nickname}</h5><p>{message}</p></div>
             </PostCard>
             <CardTools>
                 <AiOutlineHeart/> <FaRegCommentAlt/>

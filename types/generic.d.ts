@@ -1,4 +1,3 @@
-
 export interface authInitialState {
     token?: string;
 }
@@ -6,7 +5,13 @@ export interface authInitialState {
 export interface post {
     id?: number;
     message: string;
-    date: Date;
+    profile: profile;
+}
+
+export interface profile {
+    id: number;
+    nickname: string;
+    description: string;
 }
 
 export type postInitialState = post[];

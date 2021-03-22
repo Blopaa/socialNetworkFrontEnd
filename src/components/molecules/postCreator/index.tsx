@@ -92,7 +92,7 @@ const PostCreatorMolecule = () => {
         e.preventDefault()
         if (textarea && postDispatch && textarea.length <= 216) {
             let date = new Date();
-            postDispatch({type: "ADD", payload: {id: 1, message: (value as { textarea: string }).textarea, date}});
+            postDispatch({type: "ADD", payload: {message: (value as { textarea: string }).textarea, profile: }}); //service que profile
             (value as { textarea: string }).textarea = '';
 
         }
