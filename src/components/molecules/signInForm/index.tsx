@@ -5,6 +5,7 @@ import InputAtom from '../../atoms/input';
 import FormErrorAtom from "../../atoms/formError";
 import AuthReducer from "../../../reducers/authReducer";
 import {AuthContext} from "../../../contexts/authContext";
+import {signIn} from "../../../services/authServices";
 
 const Form = styled.form`
   display: flex;
@@ -35,14 +36,19 @@ const SignInFormMolecule = () => {
     const [error, setError] = useState({message: '', error: false});
     const {authDispatch, authState} = useContext(AuthContext);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!signInForm.Password || !signInForm.Email) {
             setError({message: "email and password must be fullfilled", error: true})
             return;
         }
         if (!authDispatch) throw new Error("no dispatch")
-        authDispatch({type: "LOG_IN", payload: "token"})
+        const signin = await signIn({email: signInForm.Email, password: signInForm.Password})
+        if(signin.message){
+            setError({message: signin.message, error: true})
+        }else {
+            authDispatch({type: "LOG_IN", payload: signin.data.token})
+        }
 
     }
 

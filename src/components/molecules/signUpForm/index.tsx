@@ -4,6 +4,7 @@ import ButtomAtom from '../../atoms/button';
 import InputAtom from '../../atoms/input';
 import {AuthContext} from "../../../contexts/authContext";
 import FormErrorAtom from "../../atoms/formError";
+import {signUp} from "../../../services/authServices";
 
 const Form = styled.form`
   display: flex;
@@ -30,14 +31,14 @@ const Container = styled.div`
 `;
 
 const SignUpFormMolecule = () => {
-    const [signUpForm, setSignUpForm] = useState<{ Password?: string, Email?: string, Nickname?: string }>({});
+    const [signUpForm, setSignUpForm] = useState<{ Password?: string, Email?: string, Nickname?: string, Username?: string }>({});
     const [passwordRep, setPasswordRep] = useState<{ "Repeat Password"?: string }>({});
     const [error, setError] = useState({message: '', error: false});
     const {authDispatch, authState} = useContext(AuthContext);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!signUpForm.Password || !signUpForm.Email || !signUpForm.Nickname) {
+        if (!signUpForm.Password || !signUpForm.Email || !signUpForm.Nickname || !signUpForm.Username) {
             setError({message: "nickname, email and password must be fullfilled", error: true})
             return;
         }
@@ -46,7 +47,12 @@ const SignUpFormMolecule = () => {
             return;
         }
         if (!authDispatch) throw new Error("no dispatch")
-        authDispatch({type: "LOG_IN", payload: "token"})
+        const signup = await signUp({email: signUpForm.Email, password: signUpForm.Password, nickname: signUpForm.Nickname, username: signUpForm.Username})
+       if(signup.message){
+           setError({message: signup.message, error: true})
+       }else{
+           authDispatch({type: "LOG_IN", payload: signup.data.token})
+       }
     }
 
     return (
@@ -55,6 +61,11 @@ const SignUpFormMolecule = () => {
                 <Form onSubmit={handleSubmit}>
                 <p>Sign Up</p>
                     <InputAtom
+                        name="Username"
+                        sendValue={setSignUpForm}
+                        lastFormValue={signUpForm}
+                        formType="text"
+                    /><InputAtom
                         name="Nickname"
                         sendValue={setSignUpForm}
                         lastFormValue={signUpForm}
