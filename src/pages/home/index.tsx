@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeGridOrganism from "../../components/organism/homeGrid";
+import HomeGridOrganism from "../../components/organism/homegrid/homeGrid";
 
 const HomePage = () => {
     return (

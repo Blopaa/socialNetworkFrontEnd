@@ -4,8 +4,9 @@ export interface authInitialState {
 }
 
 export interface post {
-    id: number;
+    id?: number;
     message: string;
+    date: Date;
 }
 
 export type postInitialState = post[];

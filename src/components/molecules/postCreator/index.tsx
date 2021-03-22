@@ -8,7 +8,6 @@ const PostCreator = styled.div`
   background-color: #FFFFFF;
   max-height: 15.5625rem;
   border-radius: 1rem;
-  margin: 1rem;
   padding: 1rem;
   border: 0.5px solid #A089FA;
   box-shadow: 0 4px 4px rgba(160, 137, 250, 0.2);
@@ -17,7 +16,8 @@ const PostCreator = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
+  margin-top: 1rem;
+  
   h3 {
     font-size: 2.225rem;
     margin: 0;
@@ -80,7 +80,8 @@ const PostCreatorMolecule = () => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if(textarea && postDispatch){
-            postDispatch({type: "ADD", payload: {id: 1, message: (value as { textarea: string }).textarea}});
+            let date = new Date();
+            postDispatch({type: "ADD", payload: {id: 1, message: (value as { textarea: string }).textarea, date}});
             (value as { textarea: string }).textarea = '';
 
         }

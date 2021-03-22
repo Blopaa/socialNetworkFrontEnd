@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from "@emotion/styled";
-import MenuSidebarMolecule from "../molecules/menuSidebar";
-import {fadeIn} from "../../styles/animations";
-import PostCreatorMolecule from "../molecules/postCreator";
+import MenuSidebarMolecule from "../../molecules/menuSidebar";
+import {fadeIn} from "../../../styles/animations";
+import PostCreatorMolecule from "../../molecules/postCreator";
+import PostsOrganism from "../posts";
 
 const HomeGridOrganism = () => {
 
@@ -16,7 +17,7 @@ const HomeGridOrganism = () => {
 
     return (
         <HomeGrid>
-            <MenuSidebarMolecule/><PostCreatorMolecule/><p>vlw</p>
+            <MenuSidebarMolecule/><PostsOrganism/><p>vlw</p>
         </HomeGrid>
     );
 };
