@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import ButtomAtom from "../../atoms/button";
 import useForm from "../../../hooks/useForm";
 import {PostContext} from "../../../contexts/postContext";
+import {getProfile} from "../../../services/userServices";
+import {AuthContext} from "../../../contexts/authContext";
 
 const PostCreator = styled.div`
   background-color: #FFFFFF;
@@ -87,12 +89,13 @@ const PostCreatorMolecule = () => {
     })
 
     const textarea = (value as { textarea: string }).textarea
+    const {authState, authDispatch} = useContext(AuthContext);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        const profile = await getProfile({"auth-token": authState?.token})
         if (textarea && postDispatch && textarea.length <= 216) {
-            let date = new Date();
-            postDispatch({type: "ADD", payload: {message: (value as { textarea: string }).textarea, profile: }}); //service que profile
+            postDispatch({type: "ADD", payload: {message: (value as { textarea: string }).textarea, profile: profile.data}}); //service que profile
             (value as { textarea: string }).textarea = '';
 
         }
