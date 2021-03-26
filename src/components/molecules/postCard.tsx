@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import styled from "@emotion/styled";
 import {CgProfile} from 'react-icons/cg'
 import {AiOutlineHeart} from 'react-icons/ai'
 import {FaRegCommentAlt} from "react-icons/all";
 import {profile} from "../../../types/generic";
+import {fadeIn} from "../../styles/animations";
 
 interface PostCardProps {
     message: string;
@@ -16,31 +17,38 @@ const PostCard = styled.div`
   grid-template-columns: 2.5rem auto;
   column-gap: 1rem;
   padding: 2rem;
-  div{
+
+  div {
     display: flex;
     justify-content: left;
     flex-direction: column;
-    *{
+
+    * {
       margin: 0;
       font-family: sans-serif;
       color: #333333;
     }
-    p{
+
+    p {
       white-space: pre-wrap;
       margin-top: 1rem;
     }
-    h5{
+
+    h5 {
       font-size: 1.125rem;
       font-weight: bold;
     }
   }
-  span{
+
+  span {
     font-size: 2rem;
     display: flex;
     justify-content: center;
   }
 `
 const Container = styled.div`
+  transition: .3s all;
+  animation: ${fadeIn} .3s ease forwards;
   display: flex;
   flex-direction: column;
   height: auto;
@@ -55,14 +63,24 @@ const CardTools = styled.div`
   display: flex;
   justify-content: left;
   padding: 0 4.5rem;
-  font-size: 1.5rem;
-  svg{
+
+  svg {
+    font-size: 1.5rem;
+  }
+  button{
+    cursor:pointer;
+    padding: 0;
     margin-left: 1rem;
-    margin-bottom: .5rem;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    outline: none;
+    border: none;
   }
 `
 
 const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile}) => {
+
     return (
         <Container>
             <PostCard>
@@ -70,7 +88,7 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile}) => {
                 <div><h5>{profile.nickname}</h5><p>{message}</p></div>
             </PostCard>
             <CardTools>
-                <AiOutlineHeart/> <FaRegCommentAlt/>
+                <button><AiOutlineHeart/></button> <button><FaRegCommentAlt/></button>
             </CardTools>
         </Container>
     );

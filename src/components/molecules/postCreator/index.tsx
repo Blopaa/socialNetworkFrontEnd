@@ -2,9 +2,11 @@ import React, {FormEvent, useContext, useEffect} from 'react';
 import styled from "@emotion/styled";
 import ButtomAtom from "../../atoms/button";
 import useForm from "../../../hooks/useForm";
-import {PostContext} from "../../../contexts/postContext";
 import {getProfile} from "../../../services/userServices";
 import {AuthContext} from "../../../contexts/authContext";
+import {post} from "../../../../types/generic";
+import {createPost} from "../../../services/postServices";
+import {usePosts} from "../../../hooks/usePosts";
 
 const PostCreator = styled.div`
   background-color: #FFFFFF;
@@ -79,10 +81,7 @@ const PostCreator = styled.div`
   }
 `
 
-const PostCreatorMolecule = () => {
-
-    const {postState, postDispatch} = useContext(PostContext);
-
+const PostCreatorMolecule: React.FC<{fetchPosts: () => void}> = ({fetchPosts}) => {
 
     const {value, handleInputChange} = useForm({
         textarea: ''
@@ -91,13 +90,15 @@ const PostCreatorMolecule = () => {
     const textarea = (value as { textarea: string }).textarea
     const {authState, authDispatch} = useContext(AuthContext);
 
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const profile = await getProfile({"auth-token": authState?.token})
-        if (textarea && postDispatch && textarea.length <= 216) {
-            postDispatch({type: "ADD", payload: {message: (value as { textarea: string }).textarea, profile: profile.data}}); //service que profile
+        if (textarea && textarea.length <= 216) {
+            const newPost: post = {message: (value as { textarea: string }).textarea, profile: profile.data};
             (value as { textarea: string }).textarea = '';
-
+            await createPost(newPost, {"auth-token": authState?.token})
+            await fetchPosts();
         }
     }
 
