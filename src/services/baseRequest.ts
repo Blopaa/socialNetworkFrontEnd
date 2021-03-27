@@ -16,7 +16,6 @@ export const getRequest = async (url: string, headers?: {}) => {
 export const postRequest = async (url: string, body: {}, headers?: {}) => {
     try {
         const {data, status} = await axios.post(baseUri + url, body, {headers: headers})
-        console.log(data)
         return {data, status}
     }catch (e) {
         const {status} = e.response;

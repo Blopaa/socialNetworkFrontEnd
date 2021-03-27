@@ -1,15 +1,18 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import styled from "@emotion/styled";
 import {CgProfile} from 'react-icons/cg'
-import {AiOutlineHeart} from 'react-icons/ai'
+import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 import {FaRegCommentAlt} from "react-icons/all";
 import {profile} from "../../../types/generic";
 import {fadeIn} from "../../styles/animations";
+import {giveLike} from "../../services/userServices";
+import {AuthContext} from "../../contexts/authContext";
 
 interface PostCardProps {
     message: string;
     id: number;
     profile: profile;
+    isLiked: boolean;
 }
 
 const PostCard = styled.div`
@@ -79,7 +82,22 @@ const CardTools = styled.div`
   }
 `
 
-const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile}) => {
+const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLiked}) => {
+
+    const [liked, setLiked] = useState(false);
+    const {authState} = useContext(AuthContext);
+
+    const handleLike = async () => {
+        await giveLike(id, {"auth-token": authState?.token})
+        setLiked(!liked);
+    }
+
+    useEffect(() => {
+        if(isLiked){
+            setLiked(true)
+        }
+    }, [isLiked]);
+
 
     return (
         <Container>
@@ -88,7 +106,7 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile}) => {
                 <div><h5>{profile.nickname}</h5><p>{message}</p></div>
             </PostCard>
             <CardTools>
-                <button><AiOutlineHeart/></button> <button><FaRegCommentAlt/></button>
+                <button onClick={handleLike}>{liked ? <AiFillHeart color={"red"}/> : <AiOutlineHeart/>}</button> <button><FaRegCommentAlt/></button>
             </CardTools>
         </Container>
     );
