@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 import {CgProfile} from 'react-icons/cg'
 import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 import {FaRegCommentAlt} from "react-icons/all";
-import {profile} from "../../../types/generic";
-import {fadeIn} from "../../styles/animations";
-import {giveLike} from "../../services/userServices";
-import {AuthContext} from "../../contexts/authContext";
+import {profile} from "../../../../types/generic";
+import {fadeIn} from "../../../styles/animations";
+import {giveLike} from "../../../services/userServices";
+import {AuthContext} from "../../../contexts/authContext";
 
 interface PostCardProps {
     message: string;

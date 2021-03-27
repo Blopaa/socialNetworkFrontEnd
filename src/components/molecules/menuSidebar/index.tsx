@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {CgProfile} from 'react-icons/cg';
 import {AiOutlineHome} from 'react-icons/ai'
 import {FiLogOut} from 'react-icons/fi'
-import {AuthContext} from "../../contexts/authContext";
+import {AuthContext} from "../../../contexts/authContext";
 
 const MenuSideBar = styled.div`
       display: flex;
