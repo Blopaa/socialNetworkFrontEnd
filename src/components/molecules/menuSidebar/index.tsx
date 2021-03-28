@@ -5,6 +5,7 @@ import {CgProfile} from 'react-icons/cg';
 import {AiOutlineHome} from 'react-icons/ai'
 import {FiLogOut} from 'react-icons/fi'
 import {AuthContext} from "../../../contexts/authContext";
+import {hoverMenu} from "../../../styles/animations";
 
 const MenuSideBar = styled.div`
       display: flex;
@@ -29,7 +30,7 @@ const MenuSideBar = styled.div`
         transition: .1s;
         
         &:hover{
-          transform: scale(1.2,1.2);
+          animation: ${hoverMenu} .25s infinite;
         }
         a{
           text-decoration: none;

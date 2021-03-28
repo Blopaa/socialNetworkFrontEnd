@@ -17,7 +17,7 @@ const HomeGridOrganism = () => {
 
     return (
         <HomeGrid>
-            <MenuSidebarMolecule/><PostsOrganism/><p>vlw</p>
+            <MenuSidebarMolecule/><PostsOrganism/><p>ya se hara algun dia esta parte</p>
         </HomeGrid>
     );
 };

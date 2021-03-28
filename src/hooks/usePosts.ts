@@ -8,10 +8,12 @@ export const usePosts = (initalCounter: number = 0) => {
     const [posts, setPosts] = useState<post[]>([]);
     const [liked, setLiked] = useState<post[]>([]);
     const [counter, setCounter] = useState(initalCounter);
+    const [loading, setLoading] = useState(false);
     const {authState} = useContext(AuthContext);
 
 
     const fetchPosts = async () => {
+        setLoading(true)
         getPosts(counter, {"auth-token": authState?.token}).then((d) => {
             setPosts(d.data)
         })
@@ -19,6 +21,7 @@ export const usePosts = (initalCounter: number = 0) => {
             setLiked(d.data);
         })
         setCounter(counter + 1)
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -34,6 +37,7 @@ export const usePosts = (initalCounter: number = 0) => {
         posts,
         counter,
         fetchPosts,
-        liked
+        liked,
+        loading
     }
 }

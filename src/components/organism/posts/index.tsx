@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import PostCreatorMolecule from "../../molecules/postCreator";
 import PostCardMolecule from "../../molecules/postCard";
 import {usePosts} from "../../../hooks/usePosts";
+import LoadingAtom from "../../atoms/loading";
 
 const Posts = styled.div`
   overflow-y: scroll;
@@ -13,7 +14,7 @@ const Posts = styled.div`
 `
 
 const PostsOrganism = () => {
-    const {posts, counter, fetchPosts, liked} = usePosts()
+    const {posts, counter, fetchPosts, liked, loading} = usePosts()
 
     const handleScroll = async (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const bottom = (e.target as Element).scrollHeight - ((e.target as Element).scrollTop) === (e.target as Element).clientHeight;
@@ -29,6 +30,7 @@ const PostsOrganism = () => {
                 <PostCardMolecule key={e.id} message={e.message} id={e.id as number} profile={e.profile}
                                   isLiked={!!liked.find(z => z.id == e.id)}/>
             ))}
+            {loading && <LoadingAtom/>}
         </Posts>
     );
 };

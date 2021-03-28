@@ -8,3 +8,15 @@ export const fadeIn = keyframes`
         opacity: 1;
     }
 `
+
+export const hoverMenu = keyframes`
+  from, 0% {
+    transform: translate(1px) scale(1.1,1.1);
+  }
+  50% {
+    transform: translate(-1px) scale(1.1,1.1);
+  }
+  to{
+    transform: translate(1px) scale(1.1,1.1);
+  }
+`
