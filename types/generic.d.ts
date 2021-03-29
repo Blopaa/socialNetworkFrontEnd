@@ -6,7 +6,8 @@ export interface post {
     id?: number;
     message: string;
     profile: profile;
-    isLiked?: boolean
+    isLiked?: boolean;
+    own?: boolean;
 }
 
 export interface profile {

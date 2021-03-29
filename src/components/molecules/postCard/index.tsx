@@ -2,22 +2,26 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import styled from "@emotion/styled";
 import {CgProfile} from 'react-icons/cg'
 import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
-import {FaRegCommentAlt} from "react-icons/all";
+import {BsThreeDotsVertical, FaRegCommentAlt} from "react-icons/all";
 import {profile} from "../../../../types/generic";
 import {fadeIn} from "../../../styles/animations";
 import {giveLike} from "../../../services/userServices";
 import {AuthContext} from "../../../contexts/authContext";
+import ButtomAtom from "../../atoms/button";
+import {deletePost} from "../../../services/postServices";
 
 interface PostCardProps {
     message: string;
     id: number;
     profile: profile;
     isLiked: boolean;
+    own: boolean;
+    fetchPost: () => Promise<void>
 }
 
 const PostCard = styled.div`
   display: grid;
-  grid-template-columns: 2.5rem auto;
+  grid-template-columns: 2.5rem auto 1rem;
   column-gap: 1rem;
   padding: 2rem;
 
@@ -70,8 +74,9 @@ const CardTools = styled.div`
   svg {
     font-size: 1.5rem;
   }
-  button{
-    cursor:pointer;
+
+  button {
+    cursor: pointer;
     padding: 0;
     margin-left: 1rem;
     width: auto;
@@ -82,34 +87,81 @@ const CardTools = styled.div`
   }
 `
 
-const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLiked}) => {
+const OwnTools = styled.div`
+  display: flex;
+  justify-content: center;
+
+  button {
+    cursor: pointer;
+    padding: 0;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+  }
+`
+
+const Options = styled.div<{ show: boolean }>`
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div{
+    display: flex;
+    align-items: center;
+  }
+`
+
+const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLiked, own, fetchPost}) => {
 
     const [liked, setLiked] = useState(false);
     const {authState} = useContext(AuthContext);
+    const [show, setShow] = useState(false);
+    let header = {"auth-token": authState?.token};
 
     const handleLike = async () => {
-        await giveLike(id, {"auth-token": authState?.token})
+        await giveLike(id, header)
         setLiked(!liked);
     }
 
+    const handleDelete = async () => {
+        await deletePost(id, header);
+        await fetchPost();
+
+    }
+
     useEffect(() => {
-        if(isLiked){
+        if (isLiked) {
             setLiked(true)
         }
-    }, [isLiked]);
+    }, [isLiked, own]);
 
 
     return (
         <Container>
-            <PostCard>
+            {!show ? <><PostCard>
                 <span><CgProfile/></span>
                 <div><h5>{profile.nickname}</h5><p>{message}</p></div>
+                {own && <OwnTools>
+                    <button onClick={() => setShow(!show)}><BsThreeDotsVertical/></button>
+                </OwnTools>}
             </PostCard>
-            <CardTools>
-                <button onClick={handleLike}>{liked ? <AiFillHeart color={"red"}/> : <AiOutlineHeart/>}</button> <button><FaRegCommentAlt/></button>
-            </CardTools>
+                <CardTools>
+                    <button onClick={handleLike}>{liked ? <AiFillHeart color={"red"}/> : <AiOutlineHeart/>}</button>
+                    <button><FaRegCommentAlt/></button>
+                </CardTools></> : <Options show={show}>
+                <p>Are you sure yo want to delete it?</p>
+                <div>
+                    <ButtomAtom type={"button"} size={"l"} stetic={"auth"} onClick={() => setShow(!show)}>Cancel</ButtomAtom>
+                    <ButtomAtom type={"button"} size={"l"} stetic={"warning"} onClick={handleDelete}>Delete</ButtomAtom>
+                </div>
+            </Options>
+            }
         </Container>
     );
-};
+}
+;
 
 export default PostCardMolecule;

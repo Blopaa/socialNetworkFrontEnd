@@ -11,6 +11,7 @@ import {usePosts} from "../../../hooks/usePosts";
 const PostCreator = styled.div`
   background-color: #FFFFFF;
   max-height: 15.5625rem;
+  width: 100%;
   border-radius: 1rem;
   padding: 1rem;
   border: 0.5px solid #A089FA;

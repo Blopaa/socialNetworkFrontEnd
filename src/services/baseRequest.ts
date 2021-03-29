@@ -23,3 +23,15 @@ export const postRequest = async (url: string, body: {}, headers?: {}) => {
         return {status, message}
     }
 }
+
+export const deleteRequest = async (url: string, header: {}) => {
+    try {
+        const {data, status} = await axios.delete(baseUri + url, {headers: header})
+        return {data, status}
+    }catch (e){
+        const {status} = e.response;
+        const {message} = e.response.data
+        console.log(message)
+        return {status, message}
+    }
+}
