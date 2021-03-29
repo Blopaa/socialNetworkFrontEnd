@@ -9,13 +9,13 @@ import {createPost} from "../../../services/postServices";
 import {usePosts} from "../../../hooks/usePosts";
 
 const PostCreator = styled.div`
-  background-color: #FFFFFF;
+  margin: 2rem;
+  background-color: #F6F6F6;
   max-height: 15.5625rem;
-  width: 100%;
+  width: calc(100% - 4rem);
   border-radius: 1rem;
   padding: 1rem;
-  border: 0.5px solid #A089FA;
-  box-shadow: 0 4px 4px rgba(160, 137, 250, 0.2);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05), -10px -10px 30px rgba(255, 255, 255, 0.25), inset -10px -10px 30px rgba(255, 255, 255, 0.25), inset 10px 10px 30px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -34,6 +34,7 @@ const PostCreator = styled.div`
   textarea {
     border: none;
     background-color: #F6F6F6;
+    box-shadow: inset 10px 10px 30px rgba(0, 0, 0, 0.05), inset -10px -10px 30px #FFFFFF;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
