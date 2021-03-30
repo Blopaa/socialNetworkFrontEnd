@@ -44,8 +44,8 @@ export const usePosts = (initalCounter: number = 0) => {
                setAbleFetch(true)
            }, 200)
            setCounter(counter + 1)
-           setLoading(false)
        }
+        setLoading(false)
     }
 
     useEffect(() => {

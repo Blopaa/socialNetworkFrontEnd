@@ -22,7 +22,7 @@ interface PostCardProps {
 
 const PostCard = styled.div`
   display: grid;
-  grid-template-columns: 2.5rem auto 1rem;
+  grid-template-columns: 2.5rem 90% 1rem;
   column-gap: 1rem;
   padding: 2rem;
   position: relative;
@@ -52,6 +52,10 @@ const PostCard = styled.div`
     p {
       white-space: pre-wrap;
       margin-top: 1rem;
+      text-align: left;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
     }
 
     h5 {
@@ -68,7 +72,7 @@ const PostCard = styled.div`
 `
 const Container = styled.div`
   margin: 2rem;
-  transition: .3s all;
+  transition: .25s all;
   animation: ${fadeIn} .3s ease forwards;
   display: flex;
   flex-direction: column;
@@ -88,6 +92,9 @@ const Container = styled.div`
   
   &:hover{
     transform: translateY(.5rem);
+    box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+    inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   }
 `
 

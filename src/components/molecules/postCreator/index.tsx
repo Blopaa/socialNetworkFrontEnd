@@ -35,11 +35,15 @@ const PostCreator = styled.div`
 
   textarea {
     border: none;
+    transition: .2s all;
     background-color: #e8eff5;
-    box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
-    inset 6px 6px 16px rgba(209, 217, 230, 0.8),
-      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
-
+      box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+        inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    
+    &:hover {
+      transform: translateY(1px);
+    }
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -113,7 +117,7 @@ const PostCreatorMolecule: React.FC<{fetchPosts: () => void}> = ({fetchPosts}) =
         <PostCreator>
             <h3>Post something</h3>
             <form onSubmit={handleSubmit}>
-                <textarea placeholder="write here" value={textarea} onChange={handleInputChange} name="textarea"><span>hi</span></textarea>
+                <div><textarea placeholder="write here" value={textarea} onChange={handleInputChange} name="textarea"><span>hi</span></textarea></div>
                 <div><ButtomAtom type={"submit"}
                                  size={"l"}
                                  stetic={"soft"}>Post</ButtomAtom><p>{textarea.length}/216</p></div>
