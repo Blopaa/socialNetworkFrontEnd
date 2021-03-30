@@ -16,12 +16,11 @@ const Posts = styled.div`
     width: 0;
   }
 `
-
 const PostsOrganism = () => {
     const {posts, counter, fetchPosts, liked, loading, profile} = usePosts()
     const handleScroll = async (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const bottom = (e.target as Element).scrollHeight - ((e.target as Element).scrollTop) === (e.target as Element).clientHeight;
-        if (bottom && counter >= 1) {
+        if (bottom && counter >= 1){
             await fetchPosts()
         }
     }

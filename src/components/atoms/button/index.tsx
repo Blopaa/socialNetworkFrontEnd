@@ -3,7 +3,7 @@ import React from 'react';
 
 type ButtomStyleProps = {
     size: 'xl' | 'l';
-    stetic: 'auth' | "warning"
+    stetic: 'auth' | "warning" | "soft"
 };
 
 interface ButtomProps extends ButtomStyleProps {
@@ -23,6 +23,8 @@ const Button = styled.button<ButtomStyleProps>`
         return "#834FE3"
       case "warning":
         return "#EE1B24"
+      case "soft":
+          return "rgb(232, 239, 245)"
     }
   }};
   border-radius: 10px;
@@ -30,10 +32,17 @@ const Button = styled.button<ButtomStyleProps>`
   border: none;
   transition: .2s all;
   cursor: pointer;
-  color: #f6f6f6;
+  color: ${({stetic}) => {
+    switch (stetic) {
+      case "soft":
+        return "#333333"
+      default: 
+          return "#f6f6f6"
+  }}};
   font-weight: bold;
   font-size: 1rem;
   margin: .75rem;
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff, inset 4px 4px 8px rgba(209, 217, 230, 0.2), inset -8px -8px 8px rgba(255, 255, 255, 0.2);
 
   &:hover {
     background-color: ${({stetic}) => {
@@ -44,6 +53,10 @@ const Button = styled.button<ButtomStyleProps>`
           return "#D91E29"
       }
     }};
+    box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+    inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    transform: translateY(2px);
   }
 `;
 
