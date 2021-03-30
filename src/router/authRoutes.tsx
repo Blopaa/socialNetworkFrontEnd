@@ -10,8 +10,10 @@ const AuthRoutes = () => {
     const Nav = styled.nav`
       width: 100%;
       height: 6.625rem;
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
-      background-color: #FFFFFF;
+      box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+      inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+        inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+      background-color: rgb(232, 239, 245);
     `
 
     return (

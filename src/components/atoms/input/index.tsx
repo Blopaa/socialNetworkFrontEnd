@@ -12,8 +12,10 @@ type InputProps = {
 
 const Input = styled.input`
   height: 2rem;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: rgb(232, 239, 245);
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   border: none;
   outline: none;
@@ -31,7 +33,10 @@ const Input = styled.input`
   }
 
   :hover{
-    box-shadow: 0px 9px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+    inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    transform: translateY(2px);
   }
 `;
 

@@ -25,6 +25,18 @@ const PostCard = styled.div`
   grid-template-columns: 2.5rem auto 1rem;
   column-gap: 1rem;
   padding: 2rem;
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    height: 1px;
+    width: 90%;
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: .5rem;
+  }
 
   div {
     display: flex;
@@ -61,21 +73,28 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
-  background-color: #F6F6F6;
-  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05), -10px -10px 30px rgba(255, 255, 255, 0.25), inset -10px -10px 30px rgba(255, 255, 255, 0.25), inset 10px 10px 30px rgba(0, 0, 0, 0.05);
+  background-color: #e8eff5;
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+
   border-radius: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 0;
 
   a {
     text-decoration: inherit;
     color: inherit;
+  }
+  
+  &:hover{
+    transform: translateY(.5rem);
   }
 `
 
 const CardTools = styled.div`
   display: flex;
   justify-content: left;
-  padding: 0 4.5rem ;
+  padding: 0 4.5rem;
   padding-bottom: 2rem;
 
   svg {
@@ -149,9 +168,14 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLike
 
         return (
             <Container>
-                {!show ? <Link to={`/post/${id}`}><PostCard>
-                    <span><CgProfile/></span>
-                    <div><h5>{profile.nickname}</h5><p>{message}</p></div>
+                {!show ? <><PostCard>
+                    <Link to={`/${profile.nickname}`}>
+                <span>
+                    <CgProfile/>
+                </span>
+                    </Link>
+                    <div><Link to={`/${profile.nickname}`}><h5>{profile.nickname}</h5></Link><Link to={`/post/${id}`}>
+                        <p>{message}</p></Link></div>
                     {own && <OwnTools>
                         <button onClick={() => setShow(!show)}><BiTrashAlt/></button>
                     </OwnTools>}
@@ -159,12 +183,12 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLike
                     <CardTools>
                         <button onClick={handleLike}>{liked ? <AiFillHeart color={"red"}/> : <AiOutlineHeart/>}</button>
                         <button><FaRegCommentAlt/></button>
-                    </CardTools></Link> : <Options show={show}>
+                    </CardTools></> : <Options show={show}>
                     <p>Are you sure yo want to delete it?</p>
                     <div>
-                        <ButtomAtom type={"button"} size={"l"} stetic={"auth"}
+                        <ButtomAtom type={"button"} size={"l"} stetic={"soft"}
                                     onClick={() => setShow(!show)}>Cancel</ButtomAtom>
-                        <ButtomAtom type={"button"} size={"l"} stetic={"warning"} onClick={handleDelete}>Delete</ButtomAtom>
+                        <ButtomAtom type={"button"} size={"l"} stetic={"soft"} onClick={handleDelete}>Delete</ButtomAtom>
                     </div>
                 </Options>
                 }

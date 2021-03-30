@@ -20,7 +20,7 @@ const MenuSideBar = styled.div`
       li {
         display: flex;
         align-items: center;
-        justify-content: left;
+        justify-content: center;
         margin: 4.5rem 0;
         list-style: none;
         font-weight: bold;
@@ -28,10 +28,20 @@ const MenuSideBar = styled.div`
         cursor: pointer;
         width: 100%;
         transition: .1s;
+        background-color: #e8eff5;
+        box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+        inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+          inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+        padding: 1rem;
+        border-radius: 1rem;
         
         &:hover{
-          animation: ${hoverMenu} .25s infinite;
+          box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+          inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+            inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+          transform: translateY(2px);
         }
+        
         a{
           text-decoration: none;
           color: inherit;

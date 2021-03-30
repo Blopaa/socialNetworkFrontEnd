@@ -71,7 +71,7 @@ const SignInFormMolecule = () => {
                         formType="password"
                         pattern="[\s\S]{6,}"
                     />
-                    <ButtomAtom type="submit" size="xl" stetic="auth">
+                    <ButtomAtom type="submit" size="xl" stetic="soft">
                         Submit
                     </ButtomAtom>
                 </Form>

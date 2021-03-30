@@ -27,7 +27,7 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            <div style={{minWidth: '100vw', minHeight: '100vh'}}>
+            <div style={{minWidth: '100vw', minHeight: '100vh', backgroundColor: 'rgb(232, 239, 245)'}}>
                     <AuthContext.Provider value={{authState, authDispatch}}>
                         <Switch>
                             {authState.token ? <OtherRoutes/> : <AuthRoutes/>}

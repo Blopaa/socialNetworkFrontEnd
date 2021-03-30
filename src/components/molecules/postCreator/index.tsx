@@ -10,12 +10,14 @@ import {usePosts} from "../../../hooks/usePosts";
 
 const PostCreator = styled.div`
   margin: 2rem;
-  background-color: #F6F6F6;
+  background-color: #e8eff5;
   max-height: 15.5625rem;
   width: calc(100% - 4rem);
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05), -10px -10px 30px rgba(255, 255, 255, 0.25), inset -10px -10px 30px rgba(255, 255, 255, 0.25), inset 10px 10px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -33,8 +35,11 @@ const PostCreator = styled.div`
 
   textarea {
     border: none;
-    background-color: #F6F6F6;
-    box-shadow: inset 10px 10px 30px rgba(0, 0, 0, 0.05), inset -10px -10px 30px #FFFFFF;
+    background-color: #e8eff5;
+    box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+    inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -111,7 +116,7 @@ const PostCreatorMolecule: React.FC<{fetchPosts: () => void}> = ({fetchPosts}) =
                 <textarea placeholder="write here" value={textarea} onChange={handleInputChange} name="textarea"><span>hi</span></textarea>
                 <div><ButtomAtom type={"submit"}
                                  size={"l"}
-                                 stetic={"auth"}>Post</ButtomAtom><p>{textarea.length}/216</p></div>
+                                 stetic={"soft"}>Post</ButtomAtom><p>{textarea.length}/216</p></div>
             </form>
         </PostCreator>
     );

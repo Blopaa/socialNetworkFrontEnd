@@ -14,7 +14,7 @@ const HomeGridOrganism = () => {
       z-index: 1;
       grid-template-columns: 23.375rem auto 23.375rem;
       grid-template-areas: "menu posts users";
-      background-color: #F6F6F6;
+      background-color: #e8eff5;
     `
 
     return (

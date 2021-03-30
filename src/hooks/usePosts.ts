@@ -11,34 +11,41 @@ export const usePosts = (initalCounter: number = 0) => {
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState({});
     const {authState, authDispatch} = useContext(AuthContext);
+    const [ableFetch, setAbleFetch] = useState(true);
 
 
     const fetchPosts = async () => {
-        setLoading(true)
-        let header = {"auth-token": authState?.token}
-        getPosts(counter, header).then((d) => {
-            if (d.status === 403 && authDispatch) {
-                authDispatch({type: "LOG_OUT"})
+           setLoading(true)
+       if(ableFetch){
+           setAbleFetch(false)
+           let header = {"auth-token": authState?.token}
+           getPosts(counter, header).then((d) => {
+               if (d.status === 403 && authDispatch) {
+                   authDispatch({type: "LOG_OUT"})
 
-            }
-            setPosts(d.data)
-        })
-        getProfileLikes(header).then(d => {
-            if (d.status === 403 && authDispatch) {
-                authDispatch({type: "LOG_OUT"})
+               }
+               setPosts(d.data)
+           })
+           getProfileLikes(header).then(d => {
+               if (d.status === 403 && authDispatch) {
+                   authDispatch({type: "LOG_OUT"})
 
-            }
-            setLiked(d.data);
-        })
-        await getProfile(header).then(d => {
-            if (d.status === 403 && authDispatch) {
-                authDispatch({type: "LOG_OUT"})
+               }
+               setLiked(d.data);
+           })
+           await getProfile(header).then(d => {
+               if (d.status === 403 && authDispatch) {
+                   authDispatch({type: "LOG_OUT"})
 
-            }
-            setProfile(d.data)
-        })
-        setCounter(counter + 1)
-        setLoading(false)
+               }
+               setProfile(d.data)
+           })
+           setTimeout(() => {
+               setAbleFetch(true)
+           }, 200)
+           setCounter(counter + 1)
+           setLoading(false)
+       }
     }
 
     useEffect(() => {
@@ -56,6 +63,6 @@ export const usePosts = (initalCounter: number = 0) => {
         fetchPosts,
         liked,
         loading,
-        profile
+        profile,
     }
 }
