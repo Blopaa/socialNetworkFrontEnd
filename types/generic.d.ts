@@ -8,6 +8,8 @@ export interface post {
     profile: profile;
     isLiked?: boolean;
     own?: boolean;
+    post?: post;
+    comment?: post[]
 }
 
 export interface profile {

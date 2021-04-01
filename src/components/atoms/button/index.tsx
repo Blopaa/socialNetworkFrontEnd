@@ -7,7 +7,7 @@ type ButtomStyleProps = {
 };
 
 interface ButtomProps extends ButtomStyleProps {
-    children: string;
+    children: any;
     type: 'button' | 'submit' | 'reset';
     onSubmit?: any;
     onClick?: any;
@@ -16,7 +16,7 @@ interface ButtomProps extends ButtomStyleProps {
 const Button = styled.button<ButtomStyleProps>`
   max-width: ${({size}) => (size === 'xl' ? '31.25rem' : '7.5rem')};
   width: calc(100% - 1.5rem);
-  height: ${({size}) => (size === 'xl' ? '3rem' : '2.5rem')};
+  height: auto;
   background-color: ${({stetic}) => {
     switch (stetic) {
       case "auth":

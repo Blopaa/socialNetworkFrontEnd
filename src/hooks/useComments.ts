@@ -14,7 +14,7 @@ export const useComments = (id: number) => {
         const profile = await getProfile({"auth-token": authState?.token});
         (post.data.comment as post[]).map(e => {
             likedPost.data.find((z: post) => {
-                if (z.profile.id == e.profile.id) {
+                if (z.id == e.id) {
                     e.isLiked = true
                 }
             })
@@ -23,8 +23,7 @@ export const useComments = (id: number) => {
             }
         })
 
-        setComments(post.data)
-
+        setComments(post.data.comment)
     }
 
     useEffect(() => {
@@ -32,7 +31,7 @@ export const useComments = (id: number) => {
         return () => {
             setComments([])
         }
-    }, [])
+    }, [id])
 
-    return {comments}
+    return {comments, fetchComments}
 }

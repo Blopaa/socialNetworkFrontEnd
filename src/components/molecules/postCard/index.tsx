@@ -10,6 +10,7 @@ import {AuthContext} from "../../../contexts/authContext";
 import ButtomAtom from "../../atoms/button";
 import {deletePost} from "../../../services/postServices";
 import {Link} from 'react-router-dom'
+import CreateCommentAlert from "../../atoms/createCommentAlert";
 
 interface PostCardProps {
     message: string;
@@ -17,13 +18,15 @@ interface PostCardProps {
     profile: profile;
     isLiked: boolean;
     own: boolean;
-    fetchPost: () => Promise<void>
+    fetchPost?: () => Promise<void>;
+    single?: boolean;
+    fetchComments?: () => Promise<void>;
 }
 
 const PostCard = styled.div`
   display: grid;
-  grid-template-columns: 2.5rem 90% 1rem;
-  column-gap: 1rem;
+  grid-template-columns: 5% 80% 5%;
+  column-gap: 5%;
   padding: 2rem;
   position: relative;
 
@@ -70,8 +73,9 @@ const PostCard = styled.div`
     justify-content: center;
   }
 `
-const Container = styled.div`
+const Container = styled.div<{ single: boolean }>`
   margin: 2rem;
+  width: ${({single}) => single ? "calc(100% - 4rem)" : "unset"};
   transition: .25s all;
   animation: ${fadeIn} .3s ease forwards;
   display: flex;
@@ -83,14 +87,15 @@ const Container = styled.div`
     inset -8px -8px 8px rgba(255, 255, 255, 0.2);
 
   border-radius: 1rem;
-  margin-bottom: 0;
+  margin-bottom: ${({single}) => single ? "2rem" : "0"};
+  margin-top: ${({single}) => single ? "0" : "2rem"};
 
   a {
     text-decoration: inherit;
     color: inherit;
   }
-  
-  &:hover{
+
+  &:hover {
     transform: translateY(.5rem);
     box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
     inset 6px 6px 16px rgba(209, 217, 230, 0.8),
@@ -105,18 +110,30 @@ const CardTools = styled.div`
   padding-bottom: 2rem;
 
   svg {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   button {
     cursor: pointer;
+    transition: .3s all;
     padding: 0;
     margin-left: 1rem;
-    width: auto;
-    height: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 1rem;
     background-color: transparent;
     outline: none;
     border: none;
+    box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+        inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+      transform: translateY(2px);
+    }
   }
 `
 
@@ -126,13 +143,25 @@ const OwnTools = styled.div`
 
   button {
     cursor: pointer;
+    transition: .3s all;
     padding: 0;
-    width: auto;
-    height: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 1rem;
     background-color: transparent;
     outline: none;
     border: none;
     font-size: 1rem;
+    box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+        inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+      transform: translateY(2px);
+    }
   }
 `
 
@@ -146,13 +175,27 @@ const Options = styled.div<{ show: boolean }>`
     display: flex;
     align-items: center;
   }
+
+  button {
+    padding: 1rem;
+  }
 `
 
-const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLiked, own, fetchPost}) => {
+const PostCardMolecule: React.FC<PostCardProps> = ({
+                                                       message,
+                                                       id,
+                                                       profile,
+                                                       isLiked,
+                                                       fetchComments,
+                                                       own,
+                                                       fetchPost,
+                                                       single
+                                                   }) => {
 
         const [liked, setLiked] = useState(false);
         const {authState} = useContext(AuthContext);
         const [show, setShow] = useState(false);
+        const [showComment, setShowComment] = useState(false);
         let header = {"auth-token": authState?.token};
 
         const handleLike = async () => {
@@ -162,8 +205,12 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLike
 
         const handleDelete = async () => {
             await deletePost(id, header);
-            await fetchPost();
-
+            if (fetchPost) {
+                await fetchPost();
+            }
+            if(fetchComments){
+                await fetchComments()
+            }
         }
 
         useEffect(() => {
@@ -172,9 +219,8 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLike
             }
         }, [isLiked, own]);
 
-
         return (
-            <Container>
+            <Container single={single || false}>
                 {!show ? <><PostCard>
                     <Link to={`/${profile.nickname}`}>
                 <span>
@@ -189,7 +235,7 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLike
                 </PostCard>
                     <CardTools>
                         <button onClick={handleLike}>{liked ? <AiFillHeart color={"red"}/> : <AiOutlineHeart/>}</button>
-                        <button><FaRegCommentAlt/></button>
+                        <button onClick={() => setShowComment(!showComment)}><FaRegCommentAlt/></button>
                     </CardTools></> : <Options show={show}>
                     <p>Are you sure yo want to delete it?</p>
                     <div>
@@ -199,6 +245,8 @@ const PostCardMolecule: React.FC<PostCardProps> = ({message, id, profile, isLike
                     </div>
                 </Options>
                 }
+                <CreateCommentAlert fetchComments={fetchComments || undefined} fetchPosts={fetchPost || undefined} show={showComment} setShow={setShowComment} message={message}
+                                    profile={profile} id={id}/>
             </Container>
         );
     }

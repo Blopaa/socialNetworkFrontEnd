@@ -13,6 +13,9 @@ const Form = styled.form`
   align-items: center;
   max-width: 31.25rem;
   width: 100%;
+  button{
+    padding: 1rem;
+  }
 `;
 
 const Container = styled.div`
