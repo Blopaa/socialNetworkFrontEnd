@@ -29,10 +29,10 @@ const PostsOrganism = () => {
         <Posts onScroll={handleScroll}>
             <PostCreatorMolecule fetchPosts={fetchPosts}/>
             {posts.map((e, i) => (
-                <PostCardMolecule key={e.id} message={e.message} id={e.id as number} profile={e.profile}
+                <PostCardMolecule parent={e.post} key={e.id} message={e.message} id={e.id as number} profile={e.profile}
                                   isLiked={!!liked.find(z => z.id == e.id)}
                                   own={(profile as profile).id === e.profile.id} fetchPost={fetchPosts}/>
-            ))}
+            )).reverse()}
             {loading && <LoadingAtom/>}
         </Posts>
     );

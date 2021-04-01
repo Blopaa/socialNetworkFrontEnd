@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import {CgProfile} from 'react-icons/cg'
 import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 import {BiTrashAlt, FaRegCommentAlt} from "react-icons/all";
-import {profile} from "../../../../types/generic";
+import {post, profile} from "../../../../types/generic";
 import {fadeIn} from "../../../styles/animations";
 import {giveLike} from "../../../services/userServices";
 import {AuthContext} from "../../../contexts/authContext";
@@ -21,6 +21,7 @@ interface PostCardProps {
     fetchPost?: () => Promise<void>;
     single?: boolean;
     fetchComments?: () => Promise<void>;
+    parent?: post;
 }
 
 const PostCard = styled.div`
@@ -59,6 +60,7 @@ const PostCard = styled.div`
       overflow-wrap: break-word;
       word-wrap: break-word;
       hyphens: auto;
+      font-family: sans-serif;
     }
 
     h5 {
@@ -181,6 +183,17 @@ const Options = styled.div<{ show: boolean }>`
   }
 `
 
+const Reference = styled.div`
+  font-family: sans-serif;
+  font-size: .9rem;
+  //padding: 2rem;
+  //padding-bottom: 0;
+  a {
+    font-weight: bold;
+    color: #834FE3;
+  }
+`
+
 const PostCardMolecule: React.FC<PostCardProps> = ({
                                                        message,
                                                        id,
@@ -189,7 +202,8 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
                                                        fetchComments,
                                                        own,
                                                        fetchPost,
-                                                       single
+                                                       single,
+                                                       parent
                                                    }) => {
 
         const [liked, setLiked] = useState(false);
@@ -208,7 +222,7 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
             if (fetchPost) {
                 await fetchPost();
             }
-            if(fetchComments){
+            if (fetchComments) {
                 await fetchComments()
             }
         }
@@ -228,6 +242,9 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
                 </span>
                     </Link>
                     <div><Link to={`/${profile.nickname}`}><h5>{profile.nickname}</h5></Link><Link to={`/post/${id}`}>
+                        {parent && <Reference>
+                            <p>Responded to <Link to={`/${parent?.profile.nickname}`}>@{parent?.profile.nickname}</Link></p>
+                        </Reference>}
                         <p>{message}</p></Link></div>
                     {own && <OwnTools>
                         <button onClick={() => setShow(!show)}><BiTrashAlt/></button>
@@ -245,7 +262,8 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
                     </div>
                 </Options>
                 }
-                <CreateCommentAlert fetchComments={fetchComments || undefined} fetchPosts={fetchPost || undefined} show={showComment} setShow={setShowComment} message={message}
+                <CreateCommentAlert fetchComments={fetchComments || undefined} fetchPosts={fetchPost || undefined}
+                                    show={showComment} setShow={setShowComment} message={message}
                                     profile={profile} id={id}/>
             </Container>
         );

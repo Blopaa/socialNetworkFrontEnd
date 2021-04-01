@@ -3,11 +3,13 @@ import {AuthContext} from "../contexts/authContext";
 import {getPost} from "../services/postServices";
 import {getProfile, getProfileLikes} from "../services/userServices";
 import {post, profile} from "../../types/generic";
+import {useHistory} from "react-router-dom";
 
 export const usePost = (id: number) => {
     let initialState = {id: 0, isLiked: false, message: "", own: false, profile: {id: 0, nickname: "", description: ""}}
     const [post, setPost] = useState<post>(initialState);
     const {authState} = useContext(AuthContext)
+    let history = useHistory();
 
     const fetchPost = async () => {
         const foundPost = await getPost(id, {"auth-token": authState?.token})
@@ -29,9 +31,10 @@ export const usePost = (id: number) => {
         return () => {
             setPost(initialState)
         }
-    }, []);
+    }, [history]);
 
     return {
-        post
+        post,
+        fetchPost
     }
 }

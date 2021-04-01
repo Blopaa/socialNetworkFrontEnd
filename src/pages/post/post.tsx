@@ -44,13 +44,17 @@ const CommentContainer = styled.div`
 
 const PostPage = () => {
     const {id} = useParams<any>()
-    const {post} = usePost(id);
-    let history = useHistory()
+    const {post, fetchPost} = usePost(id);
     const {comments, fetchComments} = useComments(id)
-
+    let history = useHistory()
     const goBack = () => {
         history.goBack();
     }
+
+    useEffect(() => {
+        fetchPost().then(d => null)
+    }, [comments])
+
 
     return (
         <PostPageContainer>

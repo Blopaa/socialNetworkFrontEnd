@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction, useContext} from 'react';
 import ReactDOM from 'react-dom';
 import styled from "@emotion/styled";
-import {profile} from "../../../../types/generic";
+import {post, profile} from "../../../../types/generic";
 import {CgProfile} from "react-icons/cg";
 import {fadeIn} from "../../../styles/animations";
 import ButtomAtom from "../button";
