@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useContext} from 'react';
+import React, {Dispatch, SetStateAction, useContext, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import styled from "@emotion/styled";
 import {post, profile} from "../../../../types/generic";
@@ -178,6 +178,7 @@ const CreateCommentAlert: React.FC<CreateCommentProps> = ({
         }
         (value as { comment: string }).comment = ""
     }
+
 
     return (
         <>

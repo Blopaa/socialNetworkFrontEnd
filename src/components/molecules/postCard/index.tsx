@@ -9,7 +9,7 @@ import {giveLike} from "../../../services/userServices";
 import {AuthContext} from "../../../contexts/authContext";
 import ButtomAtom from "../../atoms/button";
 import {deletePost} from "../../../services/postServices";
-import {Link} from 'react-router-dom'
+import {Link, useHistory, useLocation} from 'react-router-dom'
 import CreateCommentAlert from "../../atoms/createCommentAlert";
 
 interface PostCardProps {
@@ -22,6 +22,7 @@ interface PostCardProps {
     single?: boolean;
     fetchComments?: () => Promise<void>;
     parent?: post;
+    main?: post;
 }
 
 const PostCard = styled.div`
@@ -188,10 +189,17 @@ const Reference = styled.div`
   font-size: .9rem;
   //padding: 2rem;
   //padding-bottom: 0;
-  a {
+  span {
+    all: unset;
     font-weight: bold;
     color: #834FE3;
+    font-family: sans-serif;
+    font-size: .9rem;
   }
+`
+
+const Main = styled.div`
+
 `
 
 const PostCardMolecule: React.FC<PostCardProps> = ({
@@ -211,10 +219,11 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
         const [show, setShow] = useState(false);
         const [showComment, setShowComment] = useState(false);
         let header = {"auth-token": authState?.token};
+        const history = useHistory();
 
         const handleLike = async () => {
-            await giveLike(id, header)
             setLiked(!liked);
+            await giveLike(id, header)
         }
 
         const handleDelete = async () => {
@@ -228,10 +237,12 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
         }
 
         useEffect(() => {
-            if (isLiked) {
-                setLiked(true)
-            }
+            setLiked(isLiked)
         }, [isLiked, own]);
+
+        const handleChangeRoute = (route: string) => {
+            history.push(route)
+        }
 
         return (
             <Container single={single || false}>
@@ -243,7 +254,9 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
                     </Link>
                     <div><Link to={`/${profile.nickname}`}><h5>{profile.nickname}</h5></Link><Link to={`/post/${id}`}>
                         {parent && <Reference>
-                            <p>Responded to <Link to={`/${parent?.profile.nickname}`}>@{parent?.profile.nickname}</Link></p>
+                            <p>Responded to <span
+                                onClick={() => handleChangeRoute(`/${parent?.profile.nickname}`)}>@{parent?.profile.nickname}</span>
+                            </p>
                         </Reference>}
                         <p>{message}</p></Link></div>
                     {own && <OwnTools>

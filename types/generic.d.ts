@@ -3,6 +3,7 @@ export interface authInitialState {
 }
 
 export interface post {
+    createdAt?: string;
     id?: number;
     message: string;
     profile: profile;

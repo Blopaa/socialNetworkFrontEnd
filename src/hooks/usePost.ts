@@ -12,17 +12,12 @@ export const usePost = (id: number) => {
     let history = useHistory();
 
     const fetchPost = async () => {
-        const foundPost = await getPost(id, {"auth-token": authState?.token})
+        const foundPost = await getPost(id, {"auth-token": authState?.token}) as {data: post}
         const profileLikes = await getProfileLikes({"auth-token": authState?.token})
-        profileLikes.data.find((e: post) => {
-             if( e.id == foundPost.data.id){
-                 foundPost.data.isLiked = true
-             }
-        })
+        const found = profileLikes.data.find((e: post) => (e.id == foundPost.data.id))
+        foundPost.data.isLiked = !!found
         const profile = await getProfile({"auth-token": authState?.token})
-        if((profile.data as profile).id == (foundPost.data as post).profile.id){
-            foundPost.data.own = true
-        }
+        foundPost.data.own = (profile.data as profile).id == (foundPost.data as post).profile.id;
         setPost(foundPost.data)
     }
 

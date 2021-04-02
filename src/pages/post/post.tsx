@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import PostCardMolecule from "../../components/molecules/postCard";
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams, useHistory, useLocation} from 'react-router-dom';
 import {usePost} from "../../hooks/usePost";
 import LoadingAtom from "../../components/atoms/loading";
 import styled from "@emotion/styled";
@@ -50,11 +50,11 @@ const PostPage = () => {
     const goBack = () => {
         history.goBack();
     }
+    let location = useLocation();
 
     useEffect(() => {
-        fetchPost().then(d => null)
-    }, [comments])
-
+        fetchPost().then(d => null);
+    }, [location])
 
     return (
         <PostPageContainer>

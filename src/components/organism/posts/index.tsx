@@ -28,11 +28,11 @@ const PostsOrganism = () => {
     return (
         <Posts onScroll={handleScroll}>
             <PostCreatorMolecule fetchPosts={fetchPosts}/>
-            {posts.map((e, i) => (
+            {posts.sort((a,b) => new Date(a.createdAt as string) < new Date(b.createdAt as string) ? 1 : -1 ).map((e, i) => (
                 <PostCardMolecule parent={e.post} key={e.id} message={e.message} id={e.id as number} profile={e.profile}
                                   isLiked={!!liked.find(z => z.id == e.id)}
                                   own={(profile as profile).id === e.profile.id} fetchPost={fetchPosts}/>
-            )).reverse()}
+            ))}
             {loading && <LoadingAtom/>}
         </Posts>
     );
