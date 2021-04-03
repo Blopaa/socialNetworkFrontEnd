@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import {IoChevronBackCircle} from "react-icons/all";
 import ButtomAtom from "../../components/atoms/button";
 import {useComments} from "../../hooks/useComments";
+import {fadeIn} from "../../styles/animations";
 
 const PostPageContainer = styled.div`
   * {
@@ -18,6 +19,8 @@ const PostPageContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   overflow-y: scroll;
+  animation: ${fadeIn} .3s ease-in-out;
+
   ::-webkit-scrollbar {
     width: 0;
   }
@@ -61,13 +64,15 @@ const PostPage = () => {
             <GoBackButton><ButtomAtom type={"button"} size={"l"} stetic={"soft"}
                                       onClick={() => goBack()}><IoChevronBackCircle/></ButtomAtom></GoBackButton>
             {!post ? <LoadingAtom/> :
-                <PostCardMolecule fetchComments={fetchComments} message={post.message} id={(post.id as number)} profile={post.profile}
+                <PostCardMolecule parent={post.post} main={post.post} fetchComments={fetchComments}
+                                  message={post.message} id={(post.id as number)} profile={post.profile}
                                   isLiked={(post.isLiked as boolean)} own={(post.own as boolean)} single={true}
                 />}
             <CommentContainer>
                 {
-                    comments.length > 0 && comments.reverse().map((e) => (
-                        <PostCardMolecule fetchComments={fetchComments} single key={e.id} message={e.message} id={(e.id as number)} profile={e.profile}
+                    comments.length > 0 && comments.sort((a, b) => new Date(a.createdAt as string) < new Date(b.createdAt as string) ? 1 : -1).map((e) => (
+                        <PostCardMolecule fetchComments={fetchComments} single key={e.id} message={e.message}
+                                          id={(e.id as number)} profile={e.profile}
                                           isLiked={(e.isLiked as boolean)} own={(e.own as boolean)}/>
                     ))
                 }

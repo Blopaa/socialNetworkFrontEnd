@@ -17,14 +17,14 @@ const AuthRoutes = () => {
     `
 
     return (
-        <>
+        <Switch>
             <Nav/>
             <Switch>
                 <Route exact path="/auth/signup" component={SignUpPage}/>
                 <Route exact path="/auth/signin" component={SignInPage}/>
                 <Route path="**"><Redirect to="/auth/signup"/></Route>
             </Switch>
-        </>
+        </Switch>
     );
 };
 

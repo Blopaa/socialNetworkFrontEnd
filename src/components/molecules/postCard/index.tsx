@@ -199,7 +199,69 @@ const Reference = styled.div`
 `
 
 const Main = styled.div`
+  div {
+    transition: .3s all;
+    display: grid;
+    padding: 2rem;
+    grid-template-columns: 5% 85%;
+    column-gap: 5%;
+    font-family: sans-serif;
+    font-size: 1.125rem;
+    color: #333333;
+    font-weight: bold;
+    box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+      inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    margin: 1rem;
+    cursor: pointer;
 
+    &:hover {
+      box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
+      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+        inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+      transform: translateY(2px);
+    }
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+    }
+
+    div {
+      all: unset;
+      display: flex;
+      justify-content: left;
+      flex-direction: column;
+
+      &:hover {
+        box-shadow: none;
+        transform: none;
+      }
+
+      * {
+        margin: 0;
+        font-family: sans-serif;
+        color: #333333;
+      }
+
+      p {
+        white-space: pre-wrap;
+        margin-top: 1rem;
+        text-align: left;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
+        font-weight: normal;
+      }
+
+      h5 {
+        font-size: 1.125rem;
+        font-weight: bold;
+      }
+    }
 `
 
 const PostCardMolecule: React.FC<PostCardProps> = ({
@@ -211,7 +273,8 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
                                                        own,
                                                        fetchPost,
                                                        single,
-                                                       parent
+                                                       parent,
+                                                       main
                                                    }) => {
 
         const [liked, setLiked] = useState(false);
@@ -246,6 +309,14 @@ const PostCardMolecule: React.FC<PostCardProps> = ({
 
         return (
             <Container single={single || false}>
+                {parent && main && <Main onClick={() => handleChangeRoute(`/post/${parent.id}`)}>
+                    <div>
+                            <span>
+                                <CgProfile/>
+                            </span>
+                        <div><h5>{main.profile.nickname}</h5><p>{main.message}</p></div>
+                    </div>
+                </Main>}
                 {!show ? <><PostCard>
                     <Link to={`/${profile.nickname}`}>
                 <span>

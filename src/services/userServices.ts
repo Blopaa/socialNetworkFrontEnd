@@ -11,3 +11,7 @@ export const giveLike = async (postId: number, header: {}) => {
 export const getProfileLikes = async (header: {})=>{
     return await getRequest('/profile/user-likes', header)
 }
+
+export const getProfilesByNickname = async (nickname: string, header: {}) => {
+    return await getRequest("/profile/find-nickname/" + nickname, header)
+}

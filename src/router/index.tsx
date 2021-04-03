@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 import React, {useContext, useEffect, useReducer} from 'react'
 import {
-    BrowserRouter,
+    BrowserRouter, Redirect, Route,
     Switch,
 } from "react-router-dom";
 import authReducer from "../reducers/authReducer";
 import AuthRoutes from "./authRoutes";
 import OtherRoutes from "./otherRoutes";
 import {AuthContext} from "../contexts/authContext";
+import _404Page from "../pages/404";
 
 const Router = () => {
     let init = () => {
@@ -29,9 +30,7 @@ const Router = () => {
         <BrowserRouter>
             <div style={{minWidth: '100vw', minHeight: '100vh', backgroundColor: 'rgb(232, 239, 245)'}}>
                     <AuthContext.Provider value={{authState, authDispatch}}>
-                        <Switch>
                             {authState.token ? <OtherRoutes/> : <AuthRoutes/>}
-                        </Switch>
                     </AuthContext.Provider>
             </div>
         </BrowserRouter>

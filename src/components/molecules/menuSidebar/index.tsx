@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import styled from "@emotion/styled";
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {CgProfile} from 'react-icons/cg';
-import {AiOutlineHome} from 'react-icons/ai'
+import {AiOutlineHome, AiOutlineSearch} from 'react-icons/ai'
 import {FiLogOut} from 'react-icons/fi'
 import {AuthContext} from "../../../contexts/authContext";
 import {hoverMenu} from "../../../styles/animations";
@@ -43,6 +43,8 @@ const MenuSideBar = styled.div`
         }
         
         a{
+          width: 100%;
+          height: 100%;
           text-decoration: none;
           color: inherit;
           display: inherit;
@@ -59,13 +61,19 @@ const MenuSideBar = styled.div`
 
 const MenuSidebarMolecule = () => {
 
+    const history = useHistory();
     const {authState, authDispatch} =  useContext(AuthContext)
+
+    const handleChageRoute = (url: string) => {
+        history.push(url)
+    }
 
     return (
         <MenuSideBar>
             <ul>
-                <li><Link to="/home"><AiOutlineHome/><p>Home</p></Link></li>
-                <li><Link to="/user"><CgProfile/><p>Profile</p></Link></li>
+                <li onClick={() => handleChageRoute("/home")}><AiOutlineHome/><p>Home</p></li>
+                <li onClick={() => handleChageRoute("/user")}><CgProfile/><p>Profile</p></li>
+                <li onClick={() => handleChageRoute("/search")}><AiOutlineSearch/><p>Search</p></li>
                 <li onClick={() => authDispatch && authDispatch({type: "LOG_OUT"})}><FiLogOut/><p>Log out</p></li>
             </ul>
         </MenuSideBar>

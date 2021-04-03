@@ -6,7 +6,7 @@ import {post, profile} from "../../types/generic";
 import {useHistory} from "react-router-dom";
 
 export const usePost = (id: number) => {
-    let initialState = {id: 0, isLiked: false, message: "", own: false, profile: {id: 0, nickname: "", description: ""}}
+    let initialState: post = {id: 0, isLiked: false, message: "", own: false, profile: {id: 0, nickname: "", description: ""}}
     const [post, setPost] = useState<post>(initialState);
     const {authState} = useContext(AuthContext)
     let history = useHistory();

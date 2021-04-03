@@ -8,6 +8,7 @@ type InputProps = {
   lastFormValue: {};
   formType: string;
   pattern?: string;
+  initialValue?: string
 };
 
 const Input = styled.input`
@@ -45,10 +46,11 @@ const InputAtom: React.FC<InputProps> = ({
   sendValue,
   lastFormValue,
   formType,
-    pattern
+    pattern,
+    initialValue
 }) => {
   const { value, handleInputChange } = useForm({
-    [name]: '',
+    [name]: initialValue || "",
   });
 
   let inputValue = (value as any)[name];

@@ -2,15 +2,18 @@ import React from 'react';
 import {Redirect, Route, Switch, useRouteMatch} from "react-router-dom";
 import HomePage from "../pages/home";
 import PostPage from "../pages/post/post";
+import SearchPage from "../pages/Search";
+import ProfilePage from "../pages/Profile";
 
 const OtherRoutes = () => {
     return (
-        <>
-            <Route exact path="/home" component={HomePage}/>
+        <Switch>
             <Route exact path="/post/:id" component={PostPage}/>
-            {/*<Route exact path="/user/:user" component={HomePage}/>*/}
-            <Route path="**"><Redirect to="/home"/></Route>
-        </>
+            <Route exact path="/search" component={SearchPage}/>
+            <Route exact path="/home" component={HomePage}/>
+            <Route exact path="/:user" component={ProfilePage}/>
+            <Redirect to={"/home"}/>
+        </Switch>
     );
 };
 
