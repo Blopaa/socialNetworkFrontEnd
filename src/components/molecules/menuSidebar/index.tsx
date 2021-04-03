@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styled from "@emotion/styled";
 import {Link, useHistory} from 'react-router-dom'
 import {CgProfile} from 'react-icons/cg';
@@ -6,6 +6,7 @@ import {AiOutlineHome, AiOutlineSearch} from 'react-icons/ai'
 import {FiLogOut} from 'react-icons/fi'
 import {AuthContext} from "../../../contexts/authContext";
 import {hoverMenu} from "../../../styles/animations";
+import {profile} from "../../../../types/generic";
 
 const MenuSideBar = styled.div`
       display: flex;
@@ -61,8 +62,14 @@ const MenuSideBar = styled.div`
 
 const MenuSidebarMolecule = () => {
 
+    const [profile, setProfile] = useState<profile | {}>({});
+
     const history = useHistory();
     const {authState, authDispatch} =  useContext(AuthContext)
+
+    useEffect(() => {
+        authState?.profile?.then(d => setProfile(d));
+    }, [])
 
     const handleChageRoute = (url: string) => {
         history.push(url)
@@ -72,7 +79,7 @@ const MenuSidebarMolecule = () => {
         <MenuSideBar>
             <ul>
                 <li onClick={() => handleChageRoute("/home")}><AiOutlineHome/><p>Home</p></li>
-                <li onClick={() => handleChageRoute("/user")}><CgProfile/><p>Profile</p></li>
+                <li onClick={() => handleChageRoute(`/${(profile as profile).nickname}`)}><CgProfile/><p>Profile</p></li>
                 <li onClick={() => handleChageRoute("/search")}><AiOutlineSearch/><p>Search</p></li>
                 <li onClick={() => authDispatch && authDispatch({type: "LOG_OUT"})}><FiLogOut/><p>Log out</p></li>
             </ul>

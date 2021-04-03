@@ -8,6 +8,12 @@ import {IoChevronBackCircle} from "react-icons/all";
 import ButtomAtom from "../../components/atoms/button";
 import {useComments} from "../../hooks/useComments";
 import {fadeIn} from "../../styles/animations";
+import MenuSidebarMolecule from "../../components/molecules/menuSidebar";
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 23.375rem auto;
+`
 
 const PostPageContainer = styled.div`
   * {
@@ -17,24 +23,13 @@ const PostPageContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   overflow-y: scroll;
   animation: ${fadeIn} .3s ease-in-out;
+  margin-top: 4.5rem;
 
   ::-webkit-scrollbar {
     width: 0;
   }
-`
-
-const GoBackButton = styled.div`
-  margin: 2rem;
-
-  svg {
-    margin: 1rem;
-    color: #333333;
-    font-size: 2rem;
-  }
-
 `
 
 const CommentContainer = styled.div`
@@ -49,10 +44,6 @@ const PostPage = () => {
     const {id} = useParams<any>()
     const {post, fetchPost} = usePost(id);
     const {comments, fetchComments} = useComments(id)
-    let history = useHistory()
-    const goBack = () => {
-        history.goBack();
-    }
     let location = useLocation();
 
     useEffect(() => {
@@ -60,24 +51,25 @@ const PostPage = () => {
     }, [location])
 
     return (
-        <PostPageContainer>
-            <GoBackButton><ButtomAtom type={"button"} size={"l"} stetic={"soft"}
-                                      onClick={() => goBack()}><IoChevronBackCircle/></ButtomAtom></GoBackButton>
-            {!post ? <LoadingAtom/> :
-                <PostCardMolecule parent={post.post} main={post.post} fetchComments={fetchComments}
-                                  message={post.message} id={(post.id as number)} profile={post.profile}
-                                  isLiked={(post.isLiked as boolean)} own={(post.own as boolean)} single={true}
-                />}
-            <CommentContainer>
-                {
-                    comments.length > 0 && comments.sort((a, b) => new Date(a.createdAt as string) < new Date(b.createdAt as string) ? 1 : -1).map((e) => (
-                        <PostCardMolecule fetchComments={fetchComments} single key={e.id} message={e.message}
-                                          id={(e.id as number)} profile={e.profile}
-                                          isLiked={(e.isLiked as boolean)} own={(e.own as boolean)}/>
-                    ))
-                }
-            </CommentContainer>
-        </PostPageContainer>
+        <Container>
+            <MenuSidebarMolecule/>
+            <PostPageContainer>
+                {!post ? <LoadingAtom/> :
+                    <PostCardMolecule parent={post.post} main={post.post} fetchComments={fetchComments}
+                                      message={post.message} id={(post.id as number)} profile={post.profile}
+                                      isLiked={(post.isLiked as boolean)} own={(post.own as boolean)} single={true}
+                    />}
+                <CommentContainer>
+                    {
+                        comments.length > 0 && comments.sort((a, b) => new Date(a.createdAt as string) < new Date(b.createdAt as string) ? 1 : -1).map((e) => (
+                            <PostCardMolecule fetchComments={fetchComments} single key={e.id} message={e.message}
+                                              id={(e.id as number)} profile={e.profile}
+                                              isLiked={(e.isLiked as boolean)} own={(e.own as boolean)}/>
+                        ))
+                    }
+                </CommentContainer>
+            </PostPageContainer>
+        </Container>
     );
 };
 

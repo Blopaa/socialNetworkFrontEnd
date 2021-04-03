@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, {useContext, useEffect, useReducer} from 'react'
+import React, {useContext, useEffect, useReducer, useState} from 'react'
 import {
     BrowserRouter, Redirect, Route,
     Switch,
@@ -8,21 +8,23 @@ import authReducer from "../reducers/authReducer";
 import AuthRoutes from "./authRoutes";
 import OtherRoutes from "./otherRoutes";
 import {AuthContext} from "../contexts/authContext";
-import _404Page from "../pages/404";
+import {profile} from "../../types/generic";
+import {getProfile} from "../services/userServices";
 
 const Router = () => {
     let init = () => {
         let token = localStorage.getItem("token");
         if (token) {
-            return JSON.parse(token);
+            const profile = getProfile({"auth-token": JSON.parse(token).token}).then(d => d.data)
+            return {token: JSON.parse(token).token, profile};
         }
-        return {token: undefined};
+        return {token: undefined, profile: undefined};
     };
 
-    const [authState, authDispatch] = useReducer(authReducer, {token: undefined}, init);
+    const [authState, authDispatch] = useReducer(authReducer, {token: undefined, profile: undefined}, init);
 
     useEffect(() => {
-        localStorage.setItem("token", JSON.stringify(authState))
+        localStorage.setItem("token", JSON.stringify({token: authState.token}))
     }, [authState]);
 
 

@@ -3,8 +3,10 @@ import {CgProfile} from "react-icons/cg";
 import styled from "@emotion/styled";
 import {profile} from "../../../../types/generic";
 import {fadeIn} from "../../../styles/animations";
+import {useHistory} from "react-router-dom";
 
 const ProfileCard = styled.div`
+  cursor: pointer;
   transition: .2s all;
   width: calc(100% - 5rem);
   display: grid;
@@ -39,8 +41,15 @@ interface ProfileCardProps {
 }
 
 const ProfileCardAtom: React.FC<ProfileCardProps> = ({profile}) => {
+
+    const history = useHistory();
+
+    const handleRouteChange = (url: string) => {
+        history.push(url)
+    }
+
     return (
-        <ProfileCard>
+        <ProfileCard onClick={() => handleRouteChange(`/${profile.nickname}`)}>
             <span><CgProfile/></span>
             <p>{profile.nickname}</p>
         </ProfileCard>

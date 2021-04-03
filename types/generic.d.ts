@@ -1,5 +1,6 @@
 export interface authInitialState {
     token?: string;
+    profile?: Promise<profile>;
 }
 
 export interface post {

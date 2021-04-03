@@ -28,6 +28,13 @@ const SearchGrid = styled.div`
       width: calc(100% - 5rem);
       max-width: unset;
     }
+    
+    div{
+      overflow-y: scroll;
+      ::-webkit-scrollbar {
+        width: 0;
+      }
+    }
   }
 `
 
@@ -42,7 +49,9 @@ const SearchPage = () => {
     const {userSearch} = search
 
     useEffect(() => {
-        console.log(q)
+        if(userSearch == ""){
+            setProfiles([])
+        }
         userSearch != "" && getProfilesByNickname(userSearch, {"auth-token": authState?.token}).then(d => setProfiles(d.data))
     }, [userSearch])
 
@@ -56,9 +65,11 @@ const SearchPage = () => {
             <MenuSidebarMolecule/>
             <form onSubmit={handleSubmit}>
                 <InputAtom name={"userSearch"} sendValue={setSearch} lastFormValue={search} formType={"text"} initialValue={q as string}/>
-                {profiles && profiles.map(e => (
-                    <ProfileCardAtom key={e.id} profile={e}/>
-                ))}
+                <div>
+                    {profiles && profiles.map(e => (
+                        <ProfileCardAtom key={e.id} profile={e}/>
+                    ))}
+                </div>
             </form>
         </SearchGrid>
     );
