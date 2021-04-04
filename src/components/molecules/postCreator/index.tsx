@@ -106,7 +106,7 @@ const PostCreatorMolecule: React.FC<{fetchPosts: () => void}> = ({fetchPosts}) =
         e.preventDefault()
         const profile = await getProfile({"auth-token": authState?.token})
         if (textarea && textarea.length <= 216) {
-            const newPost: post = {message: (value as { textarea: string }).textarea, profile: profile.data};
+            const newPost: post = {message: (value as { textarea: string }).textarea, profile: profile.data, isLiked: false};
             (value as { textarea: string }).textarea = '';
             await createPost(newPost, {"auth-token": authState?.token})
             await fetchPosts();

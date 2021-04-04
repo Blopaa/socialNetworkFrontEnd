@@ -107,6 +107,9 @@ const Container = styled.div<{ single: boolean }>`
 `
 
 const CardTools = styled.div`
+  *{
+    animation: ${fadeIn} .3s ease-in-out;
+  }
   display: flex;
   justify-content: left;
   padding: 0 4.5rem;

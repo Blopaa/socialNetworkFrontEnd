@@ -5,6 +5,7 @@ import InputAtom from '../../atoms/input';
 import {AuthContext} from "../../../contexts/authContext";
 import FormErrorAtom from "../../atoms/formError";
 import {signUp} from "../../../services/authServices";
+import {getProfile} from "../../../services/userServices";
 
 const Form = styled.form`
   display: flex;
@@ -13,7 +14,8 @@ const Form = styled.form`
   align-items: center;
   max-width: 31.25rem;
   width: 100%;
-  button{
+
+  button {
     padding: 1rem;
   }
 `;
@@ -50,30 +52,40 @@ const SignUpFormMolecule = () => {
             return;
         }
         if (!authDispatch) throw new Error("no dispatch")
-        const signup = await signUp({email: signUpForm.Email, password: signUpForm.Password, nickname: signUpForm.Nickname, username: signUpForm.Username})
-       if(signup.message){
-           setError({message: signup.message, error: true})
-       }else{
-           authDispatch({type: "LOG_IN", payload: signup.data.token})
-       }
+        const signup = await signUp({
+            email: signUpForm.Email,
+            password: signUpForm.Password,
+            nickname: signUpForm.Nickname,
+            username: signUpForm.Username
+        })
+        if (signup.message) {
+            setError({message: signup.message, error: true})
+        } else {
+            authDispatch({
+                type: "LOG_IN", payload: {
+                    token: signup.data.token,
+                    profile: getProfile({"auth-token": signup.data.token}).then(d => d.data)
+                }
+            })
+        }
     }
 
     return (
         <>
             <Container>
                 <Form onSubmit={handleSubmit}>
-                <p>Sign Up</p>
+                    <p>Sign Up</p>
                     <InputAtom
                         name="Username"
                         sendValue={setSignUpForm}
                         lastFormValue={signUpForm}
                         formType="text"
                     /><InputAtom
-                        name="Nickname"
-                        sendValue={setSignUpForm}
-                        lastFormValue={signUpForm}
-                        formType="text"
-                    />
+                    name="Nickname"
+                    sendValue={setSignUpForm}
+                    lastFormValue={signUpForm}
+                    formType="text"
+                />
                     <InputAtom
                         name="Email"
                         sendValue={setSignUpForm}

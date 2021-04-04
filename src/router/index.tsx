@@ -15,7 +15,7 @@ const Router = () => {
     let init = () => {
         let token = localStorage.getItem("token");
         if (token) {
-            const profile = getProfile({"auth-token": JSON.parse(token).token}).then(d => d.data)
+            const profile: Promise<profile> = getProfile({"auth-token": JSON.parse(token).token}).then(d => d.data)
             return {token: JSON.parse(token).token, profile};
         }
         return {token: undefined, profile: undefined};

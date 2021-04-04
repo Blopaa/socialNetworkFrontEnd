@@ -8,16 +8,30 @@ export interface post {
     id?: number;
     message: string;
     profile: profile;
-    isLiked?: boolean;
+    isLiked: boolean;
     own?: boolean;
     post?: post;
     comment?: post[]
+}
+
+export interface user {
+    id: number;
+    username: string;
+    email: string;
+    user_follow?: user[];
+    profile: profile;
 }
 
 export interface profile {
     id: number;
     nickname: string;
     description: string;
+    post?: post[];
+    user_follow?: user[]
+    user?: user;
 }
 
-export type postInitialState = post[];
+export interface createProfile {
+    nickname: string;
+    description?: string
+}

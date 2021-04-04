@@ -6,6 +6,7 @@ import FormErrorAtom from "../../atoms/formError";
 import AuthReducer from "../../../reducers/authReducer";
 import {AuthContext} from "../../../contexts/authContext";
 import {signIn} from "../../../services/authServices";
+import {getProfile} from "../../../services/userServices";
 
 const Form = styled.form`
   display: flex;
@@ -14,7 +15,8 @@ const Form = styled.form`
   align-items: center;
   max-width: 31.25rem;
   width: 100%;
-  button{
+
+  button {
     padding: 1rem;
   }
 `;
@@ -47,10 +49,15 @@ const SignInFormMolecule = () => {
         }
         if (!authDispatch) throw new Error("no dispatch")
         const signin = await signIn({email: signInForm.Email, password: signInForm.Password})
-        if(signin.message){
+        if (signin.message) {
             setError({message: signin.message, error: true})
-        }else {
-            authDispatch({type: "LOG_IN", payload: signin.data.token})
+        } else {
+            authDispatch({type: "LOG_IN",
+                payload: {
+                    token: signin.data.token,
+                    profile: getProfile({"auth-token": signin.data.token}).then(d => d.data)
+                }
+            })
         }
 
     }

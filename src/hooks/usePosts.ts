@@ -15,36 +15,24 @@ export const usePosts = (initalCounter: number = 0) => {
 
 
     const fetchPosts = async () => {
-           setLoading(true)
-       if(ableFetch){
-           setAbleFetch(false)
-           let header = {"auth-token": authState?.token}
-           getPosts(counter, header).then((d) => {
-               if (d.status === 403 && authDispatch) {
-                   authDispatch({type: "LOG_OUT"})
-
-               }
-               setPosts(d.data)
-           })
-           getProfileLikes(header).then(d => {
-               if (d.status === 403 && authDispatch) {
-                   authDispatch({type: "LOG_OUT"})
-
-               }
-               setLiked(d.data);
-           })
-           await getProfile(header).then(d => {
-               if (d.status === 403 && authDispatch) {
-                   authDispatch({type: "LOG_OUT"})
-
-               }
-               setProfile(d.data)
-           })
-           setTimeout(() => {
-               setAbleFetch(true)
-           }, 200)
-           setCounter(counter + 1)
-       }
+        setLoading(true)
+        if (ableFetch) {
+            setAbleFetch(false)
+            let header = {"auth-token": authState?.token}
+            const posts = await getPosts(counter, header)
+            const profileLikes = await getProfileLikes(header)
+            const profile = await getProfile(header)
+            if (posts.status === 403 || profileLikes.status === 403 || profile.status === 403) {
+                authDispatch && authDispatch({type: "LOG_OUT"})
+            }
+            setPosts(posts.data)
+            setLiked(profileLikes.data);
+            setProfile(profile.data)
+            setTimeout(() => {
+                setAbleFetch(true)
+            }, 200)
+            setCounter(counter + 1)
+        }
         setLoading(false)
     }
 
