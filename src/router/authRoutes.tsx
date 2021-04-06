@@ -14,6 +14,8 @@ const AuthRoutes = () => {
       inset 4px 4px 8px rgba(209, 217, 230, 0.2),
         inset -8px -8px 8px rgba(255, 255, 255, 0.2);
       background-color: rgb(232, 239, 245);
+      position: fixed;
+      top: 0;
     `
 
     return (

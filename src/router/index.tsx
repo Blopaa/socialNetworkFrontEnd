@@ -30,7 +30,7 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            <div style={{minWidth: '100vw', minHeight: '100vh', backgroundColor: 'rgb(232, 239, 245)'}}>
+            <div style={{width: '100vw', height: '100vh', backgroundColor: 'rgb(232, 239, 245)'}}>
                     <AuthContext.Provider value={{authState, authDispatch}}>
                             {authState.token ? <OtherRoutes/> : <AuthRoutes/>}
                     </AuthContext.Provider>

@@ -5,19 +5,25 @@ import {Link} from 'react-router-dom';
 import {fadeIn} from "../../../styles/animations";
 
 const Container = styled.div`
-  margin: 4rem;
-  display: flex;
+  padding: 4rem;
+  padding-top: 6.625rem;
+  margin-top: 0;
+  display: flex;  
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: calc(100% - 8rem);
-  height: calc(100vh - 16.625rem);
+  height: calc(100vh - 19.250rem);
   animation: ${fadeIn} .5s ease;
 
   @media (max-width: 450px) {
-    margin: .5rem;
+    padding: .5rem;
+    padding-top: 6.625rem;
     width: calc(100% - 1rem);
-    height: calc(100vh - 9.624rem);
+    //height: calc(100vh - 12.249rem);
+    height: calc(100vh -  ( 6.625rem + .5rem));
+    overflow: scroll;
+    //overflow: scroll;
   }
 `;
 

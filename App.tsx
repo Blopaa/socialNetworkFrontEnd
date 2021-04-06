@@ -3,10 +3,11 @@ import React from 'react'
 import Router from './src/router'
 
 const Container = styled.div`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     font-family: sans-serif;
     background-color: #f6f6f6;
+  //overflow: hidden;
 `
 
 

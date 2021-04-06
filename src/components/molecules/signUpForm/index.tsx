@@ -21,6 +21,7 @@ const Form = styled.form`
 `;
 
 const Container = styled.div`
+  margin: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -32,6 +33,21 @@ const Container = styled.div`
     font-size: 2rem;
     text-align: left;
     font-weight: bold;
+  }
+  @media (max-width: 1150px) {
+    position: static;
+    max-width: 31.25rem;
+    width: calc(100% - 2rem);
+    height: auto;
+    div{
+      width: calc(100% - 2rem);
+      height: auto;
+      position: static;
+      padding: 1rem;
+      p{
+        margin: 0;
+      }
+    }
   }
 `;
 
