@@ -22,10 +22,8 @@ const Container = styled.div`
     padding: .5rem;
     padding-top: 6.625rem;
     width: calc(100% - 1rem);
-    //height: calc(100vh - 12.249rem);
     height: calc(100vh -  ( 6.625rem + .5rem));
     overflow: scroll;
-    //overflow: scroll;
   }
 `;
 

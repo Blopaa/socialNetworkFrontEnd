@@ -11,6 +11,7 @@ import {profile} from "../../../../types/generic";
 const Posts = styled.div`
   overflow-y: scroll;
   margin: 0;
+  width: 100%;
 
   ::-webkit-scrollbar {
     width: 0;

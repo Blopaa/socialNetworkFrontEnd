@@ -24,6 +24,10 @@ const PostCreator = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-top: 1rem;
+  
+  @media(max-width: 970px){
+    margin-top: 6rem;
+  }
 
   h3 {
     font-size: 2.225rem;

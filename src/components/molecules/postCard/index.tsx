@@ -31,6 +31,12 @@ const PostCard = styled.div`
   column-gap: 5%;
   padding: 2rem;
   position: relative;
+  
+  @media(max-width: 970px){
+    grid-template-columns: 8% 80% 8%;
+    column-gap: 2%;
+    padding: 1rem;
+  }
 
   &:after {
     content: "";
@@ -161,6 +167,11 @@ const OwnTools = styled.div`
     box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
     inset 4px 4px 8px rgba(209, 217, 230, 0.2),
       inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+    
+    @media(max-width: 970px){
+      width: 30px;
+      height: 30px;
+    }
 
     &:hover {
       box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,

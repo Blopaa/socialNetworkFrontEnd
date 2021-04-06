@@ -15,6 +15,10 @@ import useProfile from "../../hooks/useProfile";
 const Container = styled.div`
   display: grid;
   grid-template-columns: 23.375rem auto;
+  @media(max-width: 970px){
+    display: flex;
+    justify-content: center;
+  }
 `
 
 const Profile = styled.div`
@@ -25,6 +29,9 @@ const Profile = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  @media(max-width: 970px){
+    width: 90%;
+  }
 `
 
 const BackGround = styled.span`
@@ -39,6 +46,10 @@ const BackGround = styled.span`
   box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
   inset 6px 6px 16px rgba(209, 217, 230, 0.8),
     inset -8px -8px 8px rgba(255, 255, 255, 0.2);
+  @media(max-width: 970px){
+    width: 100%;
+    margin-right: 0;
+  }
 `
 
 const Image = styled.div`
@@ -105,6 +116,10 @@ const UserPosts = styled.div`
 
   ::-webkit-scrollbar {
     width: 0;
+  }
+  @media(max-width: 970px){
+    margin-right: 0;
+    width: 100%;
   }
 `
 

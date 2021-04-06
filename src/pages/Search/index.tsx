@@ -36,6 +36,20 @@ const SearchGrid = styled.div`
       }
     }
   }
+  @media(max-width: 970px){
+    display: flex;
+    form{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      div{
+        width: calc(100% - 3.5rem);
+        div{
+          width: (100% - 1rem);
+        }
+      }
+    }
+  }
 `
 
 const SearchPage = () => {

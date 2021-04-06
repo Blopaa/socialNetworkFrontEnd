@@ -12,9 +12,12 @@ const HomeGridOrganism = () => {
       height: 100vh;
       display: grid;
       z-index: 1;
-      grid-template-columns: 23.375rem auto 23.375rem;
-      grid-template-areas: "menu posts users";
+      grid-template-columns: auto minmax(39.25rem, auto) auto;
       background-color: #e8eff5;
+      
+      @media (max-width: 970px) {
+        display: flex;
+      }
     `
 
     const Soon = styled.div`
@@ -34,6 +37,10 @@ const HomeGridOrganism = () => {
             inset -8px -8px 8px rgba(255, 255, 255, 0.2);
           transform: translateY(2px);
         }
+      }
+      
+      @media(max-width: 970px){
+        display: none;
       }
     `
 

@@ -26,7 +26,7 @@ const PostPageContainer = styled.div`
   overflow-y: scroll;
   animation: ${fadeIn} .3s ease-in-out;
   margin-top: 4.5rem;
-
+  height: calc(100vh - 4.5rem);
   ::-webkit-scrollbar {
     width: 0;
   }
@@ -38,6 +38,11 @@ const CommentContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   margin: 0 7rem;
+  
+  @media(max-width: 970px){
+    width: 100%;
+    margin: 0;
+  }
 `
 
 const PostPage = () => {
@@ -62,7 +67,7 @@ const PostPage = () => {
                 <CommentContainer>
                     {
                         comments.length > 0 && comments.sort((a, b) => new Date(a.createdAt as string) < new Date(b.createdAt as string) ? 1 : -1).map((e) => (
-                            <PostCardMolecule fetchComments={fetchComments} single key={e.id} message={e.message}
+                            <PostCardMolecule parent={e.post} fetchComments={fetchComments} single key={e.id} message={e.message}
                                               id={(e.id as number)} profile={e.profile}
                                               isLiked={(e.isLiked as boolean)} own={(e.own as boolean)}/>
                         ))
