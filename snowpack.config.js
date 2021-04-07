@@ -4,7 +4,7 @@ module.exports = {
     /* ... */
   },
   plugins: [
-    /* ... */
+    "@snowpack/plugin-dotenv"
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
