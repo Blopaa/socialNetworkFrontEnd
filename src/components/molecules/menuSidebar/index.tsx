@@ -120,6 +120,12 @@ const Background = styled.div<{show: boolean}>`
   display: ${({show}) => show ? "block" : "none"};
 `
 
+const Love = styled.div`
+  font-size: 1rem;
+  font-weight: normal;
+  color: rgba(0,0,0,.5);
+`
+
 const MenuSidebarMolecule = () => {
 
     const [profile, setProfile] = useState<profile | {}>({});
@@ -148,6 +154,7 @@ const MenuSidebarMolecule = () => {
                     </li>
                     <li onClick={() => handleChageRoute("/search")}><AiOutlineSearch/><p>Search</p></li>
                     <li onClick={() => authDispatch && authDispatch({type: "LOG_OUT"})}><FiLogOut/><p>Log out</p></li>
+                    <li><Love>MADE WITH LOVE BY BLOPA</Love></li>
                 </ul>
             </MenuSideBar>
         </>
