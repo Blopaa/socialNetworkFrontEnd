@@ -1,7 +1,0 @@
-.snowpack
-build
-node_modules
-package.json/
-.idea/
-package-lock.json
-.env
