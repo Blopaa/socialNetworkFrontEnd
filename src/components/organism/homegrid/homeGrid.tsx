@@ -10,7 +10,7 @@ const HomeGrid = styled.div`
   height: 100vh;
   display: grid;
   z-index: 1;
-  grid-template-columns: auto minmax(39.25rem, auto) auto;
+  grid-template-columns: auto 39.25rem auto;
   background-color: #e8eff5;
 
   @media (max-width: 970px) {

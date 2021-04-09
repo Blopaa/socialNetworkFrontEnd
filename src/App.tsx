@@ -8,6 +8,8 @@ const Container = styled.div`
     font-family: sans-serif;
     background-color: #f6f6f6;
   //overflow: hidden;
+  padding: 0;
+  margin: 0;
 `
 
 

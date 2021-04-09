@@ -1,28 +1,28 @@
-import React, {useContext, useEffect, useState} from 'react';
-import styled from "@emotion/styled";
-import {CgProfile} from 'react-icons/cg'
-import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
-import {BiTrashAlt, FaRegCommentAlt} from "react-icons/all";
-import {post, profile} from "../../../types/generic";
-import {fadeIn} from "../../../styles/animations";
-import {giveLike} from "../../../services/userServices";
-import {AuthContext} from "../../../contexts/authContext";
-import ButtomAtom from "../../atoms/button";
-import {deletePost} from "../../../services/postServices";
-import {Link, useHistory, useLocation} from 'react-router-dom'
-import CreateCommentAlert from "../../atoms/createCommentAlert";
+import React, { useContext, useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { CgProfile } from 'react-icons/cg';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { BiTrashAlt, FaRegCommentAlt } from 'react-icons/all';
+import { post, profile } from '../../../types/generic';
+import { fadeIn } from '../../../styles/animations';
+import { giveLike } from '../../../services/userServices';
+import { AuthContext } from '../../../contexts/authContext';
+import ButtomAtom from '../../atoms/button';
+import { deletePost } from '../../../services/postServices';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import CreateCommentAlert from '../../atoms/createCommentAlert';
 
 interface PostCardProps {
-    message: string;
-    id: number;
-    profile: profile;
-    isLiked: boolean;
-    own: boolean;
-    fetchPost?: () => Promise<void>;
-    single?: boolean;
-    fetchComments?: () => Promise<void>;
-    parent?: post;
-    main?: post;
+  message: string;
+  id: number;
+  profile: profile;
+  isLiked: boolean;
+  own: boolean;
+  fetchPost?: () => Promise<void>;
+  single?: boolean;
+  fetchComments?: () => Promise<void>;
+  parent?: post;
+  main?: post;
 }
 
 const PostCard = styled.div`
@@ -31,22 +31,22 @@ const PostCard = styled.div`
   column-gap: 5%;
   padding: 2rem;
   position: relative;
-  
-  @media(max-width: 970px){
+
+  @media (max-width: 970px) {
     grid-template-columns: 8% 80% 8%;
     column-gap: 2%;
     padding: 1rem;
   }
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 5%;
     height: 1px;
     width: 90%;
-    border-bottom: 1px solid #CCCCCC;
-    margin-bottom: .5rem;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 0.5rem;
   }
 
   div {
@@ -81,23 +81,23 @@ const PostCard = styled.div`
     display: flex;
     justify-content: center;
   }
-`
+`;
 const Container = styled.div<{ single: boolean }>`
   margin: 2rem;
-  width: ${({single}) => single ? "calc(100% - 4rem)" : "unset"};
-  transition: .25s all;
-  animation: ${fadeIn} .3s ease forwards;
+  width: ${({ single }) => (single ? 'calc(100% - 4rem)' : 'unset')};
+  transition: 0.25s all;
+  animation: ${fadeIn} 0.3s ease forwards;
   display: flex;
   flex-direction: column;
   height: auto;
   background-color: #e8eff5;
   box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-  inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
     inset -8px -8px 8px rgba(255, 255, 255, 0.2);
 
   border-radius: 1rem;
-  margin-bottom: ${({single}) => single ? "2rem" : "0"};
-  margin-top: ${({single}) => single ? "0" : "2rem"};
+  margin-bottom: ${({ single }) => (single ? '2rem' : '0')};
+  margin-top: ${({ single }) => (single ? '0' : '2rem')};
 
   a {
     text-decoration: inherit;
@@ -105,16 +105,16 @@ const Container = styled.div<{ single: boolean }>`
   }
 
   &:hover {
-    transform: translateY(.5rem);
+    transform: translateY(0.5rem);
     box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
-    inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
       inset -8px -8px 8px rgba(255, 255, 255, 0.2);
   }
-`
+`;
 
 const CardTools = styled.div`
-  *{
-    animation: ${fadeIn} .3s ease-in-out;
+  * {
+    animation: ${fadeIn} 0.3s ease-in-out;
   }
   display: flex;
   justify-content: left;
@@ -127,7 +127,7 @@ const CardTools = styled.div`
 
   button {
     cursor: pointer;
-    transition: .3s all;
+    transition: 0.3s all;
     padding: 0;
     margin-left: 1rem;
     width: 40px;
@@ -137,17 +137,17 @@ const CardTools = styled.div`
     outline: none;
     border: none;
     box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+      inset 4px 4px 8px rgba(209, 217, 230, 0.2),
       inset -8px -8px 8px rgba(255, 255, 255, 0.2);
 
     &:hover {
       box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
-      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+        inset 6px 6px 16px rgba(209, 217, 230, 0.8),
         inset -8px -8px 8px rgba(255, 255, 255, 0.2);
       transform: translateY(2px);
     }
   }
-`
+`;
 
 const OwnTools = styled.div`
   display: flex;
@@ -155,7 +155,7 @@ const OwnTools = styled.div`
 
   button {
     cursor: pointer;
-    transition: .3s all;
+    transition: 0.3s all;
     padding: 0;
     width: 40px;
     height: 40px;
@@ -165,22 +165,22 @@ const OwnTools = styled.div`
     border: none;
     font-size: 1rem;
     box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+      inset 4px 4px 8px rgba(209, 217, 230, 0.2),
       inset -8px -8px 8px rgba(255, 255, 255, 0.2);
-    
-    @media(max-width: 970px){
+
+    @media (max-width: 970px) {
       width: 30px;
       height: 30px;
     }
 
     &:hover {
       box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
-      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+        inset 6px 6px 16px rgba(209, 217, 230, 0.8),
         inset -8px -8px 8px rgba(255, 255, 255, 0.2);
       transform: translateY(2px);
     }
   }
-`
+`;
 
 const Options = styled.div<{ show: boolean }>`
   padding: 1rem;
@@ -196,25 +196,25 @@ const Options = styled.div<{ show: boolean }>`
   button {
     padding: 1rem;
   }
-`
+`;
 
 const Reference = styled.div`
   font-family: sans-serif;
-  font-size: .9rem;
+  font-size: 0.9rem;
   //padding: 2rem;
   //padding-bottom: 0;
   span {
     all: unset;
     font-weight: bold;
-    color: #834FE3;
+    color: #834fe3;
     font-family: sans-serif;
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
-`
+`;
 
 const Main = styled.div`
   div {
-    transition: .3s all;
+    transition: 0.3s all;
     display: grid;
     padding: 2rem;
     grid-template-columns: 5% 85%;
@@ -224,7 +224,7 @@ const Main = styled.div`
     color: #333333;
     font-weight: bold;
     box-shadow: 7px 7px 15px #bbcfda, -4px -4px 13px #fff,
-    inset 4px 4px 8px rgba(209, 217, 230, 0.2),
+      inset 4px 4px 8px rgba(209, 217, 230, 0.2),
       inset -8px -8px 8px rgba(255, 255, 255, 0.2);
     border-radius: 1rem;
     margin: 1rem;
@@ -232,7 +232,7 @@ const Main = styled.div`
 
     &:hover {
       box-shadow: 4px 2px 18px #bbcfda, -4px -4px 13px #fff,
-      inset 6px 6px 16px rgba(209, 217, 230, 0.8),
+        inset 6px 6px 16px rgba(209, 217, 230, 0.8),
         inset -8px -8px 8px rgba(255, 255, 255, 0.2);
       transform: translateY(2px);
     }
@@ -276,96 +276,146 @@ const Main = styled.div`
         font-weight: bold;
       }
     }
-`
+  }
+`;
 
 const PostCardMolecule: React.FC<PostCardProps> = ({
-                                                       message,
-                                                       id,
-                                                       profile,
-                                                       isLiked,
-                                                       fetchComments,
-                                                       own,
-                                                       fetchPost,
-                                                       single,
-                                                       parent,
-                                                       main
-                                                   }) => {
+  message,
+  id,
+  profile,
+  isLiked,
+  fetchComments,
+  own,
+  fetchPost,
+  single,
+  parent,
+  main,
+}) => {
+  const [liked, setLiked] = useState(false);
+  const { authState } = useContext(AuthContext);
+  const [show, setShow] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  let header = { 'auth-token': authState?.token };
+  const history = useHistory();
 
-        const [liked, setLiked] = useState(false);
-        const {authState} = useContext(AuthContext);
-        const [show, setShow] = useState(false);
-        const [showComment, setShowComment] = useState(false);
-        let header = {"auth-token": authState?.token};
-        const history = useHistory();
+  const handleLike = async () => {
+    setLiked(!liked);
+    await giveLike(id, header);
+  };
 
-        const handleLike = async () => {
-            setLiked(!liked);
-            await giveLike(id, header)
-        }
-
-        const handleDelete = async () => {
-            await deletePost(id, header);
-            if (fetchPost) {
-                await fetchPost();
-            }
-            if (fetchComments) {
-                await fetchComments()
-            }
-        }
-
-        useEffect(() => {
-            setLiked(isLiked)
-        }, [isLiked, own]);
-
-        const handleChangeRoute = (route: string) => {
-            history.push(route)
-        }
-
-        return (
-            <Container single={single || false}>
-                {parent && main && <Main onClick={() => handleChangeRoute(`/post/${parent.id}`)}>
-                    <div>
-                            <span>
-                                <CgProfile/>
-                            </span>
-                        <div><h5>{main.profile.nickname}</h5><p>{main.message}</p></div>
-                    </div>
-                </Main>}
-                {!show ? <><PostCard>
-                    <Link to={`/${profile.nickname}`}>
-                <span>
-                    <CgProfile/>
-                </span>
-                    </Link>
-                    <div><Link to={`/${profile.nickname}`}><h5>{profile.nickname}</h5></Link><Link to={`/post/${id}`}>
-                        {parent && <Reference>
-                            <p>Responded to <span
-                                onClick={() => handleChangeRoute(`/${parent?.profile.nickname}`)}>@{parent?.profile.nickname}</span>
-                            </p>
-                        </Reference>}
-                        <p>{message}</p></Link></div>
-                    {own && <OwnTools>
-                        <button onClick={() => setShow(!show)}><BiTrashAlt/></button>
-                    </OwnTools>}
-                </PostCard>
-                    <CardTools>
-                        <button onClick={handleLike}>{liked ? <AiFillHeart color={"red"}/> : <AiOutlineHeart/>}</button>
-                        <button onClick={() => setShowComment(!showComment)}><FaRegCommentAlt/></button>
-                    </CardTools></> : <Options show={show}>
-                    <p>Are you sure yo want to delete it?</p>
-                    <div>
-                        <ButtomAtom type={"button"} size={"l"} stetic={"soft"}
-                                    onClick={() => setShow(!show)}>Cancel</ButtomAtom>
-                        <ButtomAtom type={"button"} size={"l"} stetic={"soft"} onClick={handleDelete}>Delete</ButtomAtom>
-                    </div>
-                </Options>
-                }
-                <CreateCommentAlert fetchComments={fetchComments || undefined} fetchPosts={fetchPost || undefined}
-                                    show={showComment} setShow={setShowComment} message={message}
-                                    profile={profile} id={id}/>
-            </Container>
-        );
+  const handleDelete = async () => {
+    await deletePost(id, header);
+    if (fetchPost) {
+      await fetchPost();
     }
-;
+    if (fetchComments) {
+      await fetchComments();
+    }
+  };
 
+  useEffect(() => {
+    setLiked(isLiked);
+  }, [isLiked, own]);
+
+  const handleChangeRoute = (route: string) => {
+    history.push(route);
+  };
+
+  return (
+    <Container single={single || false}>
+      {parent && main && (
+        <Main onClick={() => handleChangeRoute(`/post/${parent.id}`)}>
+          <div>
+            <span>
+              <CgProfile />
+            </span>
+            <div>
+              <h5>{main.profile.nickname}</h5>
+              <p>{main.message}</p>
+            </div>
+          </div>
+        </Main>
+      )}
+      {!show ? (
+        <>
+          <PostCard>
+            <Link to={`/${profile.nickname}`}>
+              <span>
+                <CgProfile />
+              </span>
+            </Link>
+            <div>
+              <Link to={`/${profile.nickname}`}>
+                <h5>{profile.nickname}</h5>
+              </Link>
+              <Link to={`/post/${id}`}>
+                {parent && (
+                  <Reference>
+                    <p>
+                      Responded to{' '}
+                      <span
+                        onClick={() =>
+                          handleChangeRoute(`/${parent?.profile.nickname}`)
+                        }
+                      >
+                        @{parent?.profile.nickname}
+                      </span>
+                    </p>
+                  </Reference>
+                )}
+                <p>{message}</p>
+              </Link>
+            </div>
+            {own && (
+              <OwnTools>
+                <button onClick={() => setShow(!show)}>
+                  <BiTrashAlt />
+                </button>
+              </OwnTools>
+            )}
+          </PostCard>
+          <CardTools>
+            <button onClick={handleLike}>
+              {liked ? <AiFillHeart color={'red'} /> : <AiOutlineHeart />}
+            </button>
+            <button onClick={() => setShowComment(!showComment)}>
+              <FaRegCommentAlt />
+            </button>
+          </CardTools>
+        </>
+      ) : (
+        <Options show={show}>
+          <p>Are you sure yo want to delete it?</p>
+          <div>
+            <ButtomAtom
+              type={'button'}
+              size={'l'}
+              stetic={'soft'}
+              onClick={() => setShow(!show)}
+            >
+              Cancel
+            </ButtomAtom>
+            <ButtomAtom
+              type={'button'}
+              size={'l'}
+              stetic={'soft'}
+              onClick={handleDelete}
+            >
+              Delete
+            </ButtomAtom>
+          </div>
+        </Options>
+      )}
+      <CreateCommentAlert
+        fetchComments={fetchComments || undefined}
+        fetchPosts={fetchPost || undefined}
+        show={showComment}
+        setShow={setShowComment}
+        message={message}
+        profile={profile}
+        id={id}
+      />
+    </Container>
+  );
+};
 export default PostCardMolecule;
